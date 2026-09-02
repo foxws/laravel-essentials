@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Essentials\Essentials\Console\Commands;
+namespace Foxws\Essentials\Console\Commands;
 
 use Illuminate\Console\Command;
 
