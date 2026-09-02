@@ -7,7 +7,7 @@ namespace Foxws\Essentials\Configurables;
 use Foxws\Essentials\Contracts\Configurable;
 use Illuminate\Validation\Rules\Password;
 
-final readonly class UseSecurePassword implements Configurable
+final readonly class ForceSecurePassword implements Configurable
 {
     public function enabled(): bool
     {
