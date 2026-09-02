@@ -103,6 +103,12 @@ return [
             'path' => env('ESSENTIALS_FOUNDATION_PATH', 'src/Foundation'),
         ],
 
+        // Generic, cross-cutting helpers that don't belong to a specific layer.
+        'Support' => [
+            'namespace' => env('ESSENTIALS_SUPPORT_NAMESPACE', 'Support'),
+            'path' => env('ESSENTIALS_SUPPORT_PATH', 'src/Support'),
+        ],
+
         // Concrete adapters to external systems (repositories, storage, queues).
         // 'Infrastructure' => [
         //     'namespace' => env('ESSENTIALS_INFRASTRUCTURE_NAMESPACE', 'Infrastructure'),
@@ -114,12 +120,6 @@ return [
         //     'namespace' => env('ESSENTIALS_INTEGRATIONS_NAMESPACE', 'Integrations'),
         //     'path' => env('ESSENTIALS_INTEGRATIONS_PATH', 'src/Integrations'),
         // ],
-
-        // Generic, cross-cutting helpers that don't belong to a specific layer.
-        'Support' => [
-            'namespace' => env('ESSENTIALS_SUPPORT_NAMESPACE', 'Support'),
-            'path' => env('ESSENTIALS_SUPPORT_PATH', 'src/Support'),
-        ],
 
     ],
 
