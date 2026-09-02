@@ -61,6 +61,6 @@ class DomainSubstitutions
      */
     public static function customSubstitutions(): array
     {
-        return Config::array('essentials.domain_substitutions', []);
+        return Config::array('essentials.ddd_substitutions', []);
     }
 }

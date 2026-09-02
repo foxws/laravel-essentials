@@ -68,53 +68,55 @@ return [
 
     'ddd_enabled' => env('ESSENTIALS_DDD', true),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Domain Namespace and Path
-    |--------------------------------------------------------------------------
-    |
-    | These options define the namespace and path for your domain layer.
-    | You can customize these values to fit your application's structure.
-    |
-    */
-
-    'domain_namespace' => env('ESSENTIALS_DOMAIN_NAMESPACE', 'Domain'),
-
-    'domain_path' => env('ESSENTIALS_DOMAIN_PATH', base_path('src/Domain')),
-
-    'domain_substitutions' => env('ESSENTIALS_DOMAIN_SUBSTITUTIONS', [
+    'ddd_substitutions' => env('ESSENTIALS_DDD_SUBSTITUTIONS', [
         // 'action' => 'CustomActions',
     ]),
 
     /*
     |--------------------------------------------------------------------------
-    | Application Namespace and Path
+    | Layers
     |--------------------------------------------------------------------------
     |
-    | These options define the namespace and path for your application layer.
-    | You can customize these values to fit your application's structure.
-    |
-    */
-
-    'application_namespace' => env('ESSENTIALS_APP_NAMESPACE', 'App/Modules'),
-
-    'application_path' => env('ESSENTIALS_APP_PATH', base_path('src/App/Modules')),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Layers
-    |--------------------------------------------------------------------------
-    |
-    | Additional top-level namespaces and paths that should be recognized as
-    | layers when generating ddd:* objects.
+    | Each layer defines a top-level namespace and the path it maps to. The
+    | Domain layer holds framework-agnostic business logic, while Modules
+    | holds Laravel-facing code (controllers, requests, middleware) that
+    | orchestrates it. Add or remove entries to fit your application's
+    | structure; every layer is registered in composer.json by ddd:install.
     |
     */
 
     'layers' => [
-        'Foundation' => env('ESSENTIALS_FOUNDATION_PATH', 'src/Foundation'),
-        'Infrastructure' => env('ESSENTIALS_INFRASTRUCTURE_PATH', 'src/Infrastructure'),
-        'Integrations' => env('ESSENTIALS_INTEGRATIONS_PATH', 'src/Integrations'),
-        'Support' => env('ESSENTIALS_SUPPORT_PATH', 'src/Support'),
+
+        'Domain' => [
+            'namespace' => env('ESSENTIALS_DOMAIN_NAMESPACE', 'Domain'),
+            'path' => env('ESSENTIALS_DOMAIN_PATH', 'app/Domain'),
+        ],
+
+        'Modules' => [
+            'namespace' => env('ESSENTIALS_MODULES_NAMESPACE', 'Modules'),
+            'path' => env('ESSENTIALS_MODULES_PATH', 'app/Modules'),
+        ],
+
+        'Foundation' => [
+            'namespace' => env('ESSENTIALS_FOUNDATION_NAMESPACE', 'Foundation'),
+            'path' => env('ESSENTIALS_FOUNDATION_PATH', 'app/Foundation'),
+        ],
+
+        'Infrastructure' => [
+            'namespace' => env('ESSENTIALS_INFRASTRUCTURE_NAMESPACE', 'Infrastructure'),
+            'path' => env('ESSENTIALS_INFRASTRUCTURE_PATH', 'app/Infrastructure'),
+        ],
+
+        'Integrations' => [
+            'namespace' => env('ESSENTIALS_INTEGRATIONS_NAMESPACE', 'Integrations'),
+            'path' => env('ESSENTIALS_INTEGRATIONS_PATH', 'app/Integrations'),
+        ],
+
+        'Support' => [
+            'namespace' => env('ESSENTIALS_SUPPORT_NAMESPACE', 'Support'),
+            'path' => env('ESSENTIALS_SUPPORT_PATH', 'app/Support'),
+        ],
+
     ],
 
 ];

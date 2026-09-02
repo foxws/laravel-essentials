@@ -13,7 +13,7 @@ it('returns the same instance from the container', function () {
 });
 
 it('merges the package config', function () {
-    expect(config('essentials.domain_namespace'))->toBe('Domain');
+    expect(config('essentials.layers.Domain.namespace'))->toBe('Domain');
 });
 
 it('loads the package translations', function () {

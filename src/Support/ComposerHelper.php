@@ -15,13 +15,13 @@ class ComposerHelper
      */
     public static function namespaces(): array
     {
-        $namespaces = [
-            Path::toNamespace(Config::string('essentials.domain_namespace', 'Domain')) => Path::toRelative(Config::string('essentials.domain_path', base_path('src/Domain'))),
-            Path::toNamespace(Config::string('essentials.application_namespace', 'App/Modules')) => Path::toRelative(Config::string('essentials.application_path', base_path('src/App/Modules'))),
-        ];
+        $namespaces = [];
 
-        foreach (Config::array('essentials.layers', []) as $layer => $path) {
-            $namespaces[Path::toNamespace($layer)] = Path::toRelative($path);
+        /** @var array<string, array{namespace?: string, path: string}> $layers */
+        $layers = Config::array('essentials.layers', []);
+
+        foreach ($layers as $key => $layer) {
+            $namespaces[Path::toNamespace($layer['namespace'] ?? $key)] = Path::toRelative($layer['path']);
         }
 
         $namespaces['Database\\Factories\\'] = 'database/factories/';
