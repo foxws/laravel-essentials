@@ -35,6 +35,10 @@ class EssentialsServiceProvider extends ServiceProvider
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'essentials');
 
+        $this->app->booted(function (): void {
+            $this->app->make(Essentials::class)->configure();
+        });
+
         if (! $this->app->runningInConsole()) {
             return;
         }
