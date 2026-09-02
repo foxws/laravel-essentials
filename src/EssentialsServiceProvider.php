@@ -31,7 +31,7 @@ class EssentialsServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/../routes/essentials.php');
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'essentials');
+        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'essentials');
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'essentials');
 
@@ -47,21 +47,21 @@ class EssentialsServiceProvider extends ServiceProvider
             __DIR__.'/../config/essentials.php' => config_path('essentials.php'),
         ], ['essentials', 'essentials-config']);
 
-        $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/essentials'),
-        ], ['essentials', 'essentials-views']);
+        // $this->publishes([
+        //     __DIR__.'/../resources/views' => resource_path('views/vendor/essentials'),
+        // ], ['essentials', 'essentials-views']);
 
         $this->publishes([
             __DIR__.'/../lang' => $this->app->langPath('vendor/essentials'),
         ], ['essentials', 'essentials-lang']);
 
-        $this->publishes([
-            __DIR__.'/../public' => public_path('vendor/essentials'),
-        ], ['essentials', 'essentials-assets']);
+        // $this->publishes([
+        //     __DIR__.'/../public' => public_path('vendor/essentials'),
+        // ], ['essentials', 'essentials-assets']);
 
-        $this->publishesMigrations([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], ['essentials', 'essentials-migrations']);
+        // $this->publishesMigrations([
+        //     __DIR__.'/../database/migrations' => database_path('migrations'),
+        // ], ['essentials', 'essentials-migrations']);
 
         $this->commands([
             DddInstallCommand::class,

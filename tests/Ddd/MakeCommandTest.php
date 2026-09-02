@@ -49,9 +49,22 @@ it('fails when --type is omitted', function () {
 });
 
 it('fails when no stub exists for the type', function () {
-    $this->artisan('ddd:make', ['name' => 'PostFilter', '--type' => 'filter', '--domain' => 'Posts'])
+    config(['essentials.ddd_substitutions' => ['widget' => 'Widgets']]);
+
+    $this->artisan('ddd:make', ['name' => 'PostWidget', '--type' => 'widget', '--domain' => 'Posts'])
         ->assertFailed();
 });
+
+it('has a stub for every built-in type', function (string $type) {
+    $this->artisan('ddd:make', ['name' => 'Example', '--type' => $type, '--domain' => 'Examples'])
+        ->assertSuccessful();
+})->with([
+    'action', 'cast', 'channel', 'class', 'collection', 'command', 'contract', 'controller',
+    'data', 'dto', 'enum', 'event', 'exception', 'factory', 'filter', 'job', 'listener', 'mail',
+    'middleware', 'migration', 'model', 'notification', 'observer', 'pipe', 'policy', 'provider',
+    'query_builder', 'request', 'resource', 'rule', 'scope', 'seeder', 'service', 'setting',
+    'state', 'trait', 'value_object', 'view_model',
+]);
 
 it('fails when the target layer is disabled', function () {
     config(['essentials.layers.Domain' => null]);

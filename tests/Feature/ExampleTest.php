@@ -19,7 +19,3 @@ it('merges the package config', function () {
 it('loads the package translations', function () {
     expect(trans('essentials::messages.placeholder'))->toBe('Essentials placeholder translation.');
 });
-
-it('loads the package views', function () {
-    expect(view()->exists('essentials::placeholder'))->toBeTrue();
-});

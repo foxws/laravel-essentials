@@ -49,6 +49,7 @@ class DddSubstitutions
             'scope' => 'Scopes',
             'seeder' => 'Database\Seeders',
             'service' => 'Services',
+            'setting' => 'Settings',
             'state' => 'States',
             'trait' => 'Concerns',
             'value_object' => 'ValueObjects',
