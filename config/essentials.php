@@ -77,11 +77,9 @@ return [
     | Layers
     |--------------------------------------------------------------------------
     |
-    | Each layer defines a top-level namespace and the path it maps to. The
-    | Domain layer holds framework-agnostic business logic, while Modules
-    | holds Laravel-facing code (controllers, requests, middleware) that
-    | orchestrates it. Add or remove entries to fit your application's
-    | structure; every layer is registered in composer.json by ddd:install.
+    | Each layer maps a namespace to a path. ddd:install registers these in
+    | composer.json. Change "namespace" to nest a layer under App\ instead,
+    | e.g. App\Modules, if you prefer.
     |
     */
 
