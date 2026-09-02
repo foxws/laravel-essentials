@@ -25,9 +25,6 @@
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
-        <testsuite name="Ddd">
-            <directory>tests/Ddd</directory>
-        </testsuite>
     </testsuites>
     <source>
         <include>

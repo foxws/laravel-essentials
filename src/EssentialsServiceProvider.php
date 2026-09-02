@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace Foxws\Essentials;
 
-use Foxws\Essentials\Console\Commands\DddInstallCommand;
-use Foxws\Essentials\Console\Commands\DddMakeCommand;
-use Foxws\Essentials\Console\Commands\DddMakeDomainCommand;
-use Foxws\Essentials\Console\Commands\DddMakeFoundationCommand;
-use Foxws\Essentials\Console\Commands\DddMakeModuleCommand;
-use Foxws\Essentials\Console\Commands\DddMakeSupportCommand;
 use Illuminate\Support\ServiceProvider;
 
 class EssentialsServiceProvider extends ServiceProvider
@@ -62,14 +56,5 @@ class EssentialsServiceProvider extends ServiceProvider
         // $this->publishesMigrations([
         //     __DIR__.'/../database/migrations' => database_path('migrations'),
         // ], ['essentials', 'essentials-migrations']);
-
-        $this->commands([
-            DddInstallCommand::class,
-            DddMakeCommand::class,
-            DddMakeDomainCommand::class,
-            DddMakeFoundationCommand::class,
-            DddMakeModuleCommand::class,
-            DddMakeSupportCommand::class,
-        ]);
     }
 }

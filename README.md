@@ -23,7 +23,7 @@ composer require foxws/laravel-essentials
 You may publish all of the package's resources at once:
 
 ```bash
-php artisan vendor:publish --tag="laravel-essentials"
+php artisan vendor:publish --tag="essentials"
 ```
 
 Or, you may publish each resource individually:
@@ -31,32 +31,13 @@ Or, you may publish each resource individually:
 ### Publishing the Configuration File
 
 ```bash
-php artisan vendor:publish --tag="laravel-essentials-config"
-```
-
-### Publishing and Running the Migrations
-
-```bash
-php artisan vendor:publish --tag="laravel-essentials-migrations"
-php artisan migrate
-```
-
-### Publishing the Views
-
-```bash
-php artisan vendor:publish --tag="laravel-essentials-views"
+php artisan vendor:publish --tag="essentials-config"
 ```
 
 ### Publishing the Translations
 
 ```bash
-php artisan vendor:publish --tag="laravel-essentials-lang"
-```
-
-### Publishing the Public Assets
-
-```bash
-php artisan vendor:publish --tag="laravel-essentials-assets"
+php artisan vendor:publish --tag="essentials-lang"
 ```
 
 ## Usage
@@ -67,14 +48,9 @@ Once installed, Laravel Essentials applies a set of sensible defaults automatica
 // Model::shouldBeStrict(), URL::forceHttps(), Date::use(CarbonImmutable::class), and more.
 ```
 
-It also adds Domain Driven Design scaffolding commands:
+See the [documentation](docs/README.md) for the full list of defaults and how to enable or disable them.
 
-```bash
-php artisan ddd:install
-php artisan ddd:make CreateInvoice --type=action --domain=Billing
-```
-
-See the [documentation](docs/README.md) for the full list of defaults, how to enable or disable them, and how the DDD commands work.
+Looking for Domain Driven Design scaffolding (`ddd:install`, `ddd:make`)? That's now the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package.
 
 ## Changelog
 
