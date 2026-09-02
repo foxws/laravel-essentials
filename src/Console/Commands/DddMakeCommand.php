@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Foxws\Essentials\Console\Commands;
 
+use Foxws\Essentials\Support\DddStubs;
 use Foxws\Essentials\Support\DddSubstitutions;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
@@ -48,8 +49,8 @@ class DddMakeCommand extends GeneratorCommand
             return self::FAILURE;
         }
 
-        if (! file_exists($this->resolveStubPath("/stubs/{$type}.ddd.stub"))) {
-            $this->components->error("No stub found for type \"{$type}\". Expected stubs/{$type}.ddd.stub, or publish your own to base_path('stubs/{$type}.ddd.stub').");
+        if (! file_exists($this->resolveStub($type))) {
+            $this->components->error("No stub found for type \"{$type}\". Expected stubs/{$type}.ddd.stub, an essentials.ddd_stubs entry, or publish your own to base_path('stubs/{$type}.ddd.stub').");
 
             return self::FAILURE;
         }
@@ -134,6 +135,21 @@ class DddMakeCommand extends GeneratorCommand
         $type = $this->option('type');
         $type = is_string($type) ? $type : '';
 
+        return $this->resolveStub($type);
+    }
+
+    /**
+     * Resolve the stub file for the given type, preferring an essentials.ddd_stubs
+     * override, then one published to the application's stubs directory.
+     */
+    protected function resolveStub(string $type): string
+    {
+        $override = DddStubs::get()[$type] ?? null;
+
+        if (is_string($override) && $override !== '') {
+            return $this->isAbsolutePath($override) ? $override : base_path($override);
+        }
+
         return $this->resolveStubPath("/stubs/{$type}.ddd.stub");
     }
 
@@ -145,6 +161,14 @@ class DddMakeCommand extends GeneratorCommand
         $customPath = base_path(trim($stub, '/'));
 
         return file_exists($customPath) ? $customPath : __DIR__.'/../../../'.ltrim($stub, '/');
+    }
+
+    /**
+     * Determine whether the given path is absolute.
+     */
+    protected function isAbsolutePath(string $path): bool
+    {
+        return (bool) preg_match('/^(?:\/|[A-Za-z]:[\\\\\/])/', $path);
     }
 
     /**

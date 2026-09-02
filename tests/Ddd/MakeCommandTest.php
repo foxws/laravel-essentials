@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 afterEach(function () {
     File::deleteDirectory(base_path('src/Domain'));
     File::deleteDirectory(base_path('src/Modules'));
+    File::deleteDirectory(base_path('stubs/ddd'));
 });
 
 it('creates a model with an explicit domain', function () {
@@ -53,6 +54,24 @@ it('fails when no stub exists for the type', function () {
 
     $this->artisan('ddd:make', ['name' => 'PostWidget', '--type' => 'widget', '--domain' => 'Posts'])
         ->assertFailed();
+});
+
+it('resolves a stub override from essentials.ddd_stubs', function () {
+    File::ensureDirectoryExists(base_path('stubs/ddd'));
+    File::put(base_path('stubs/ddd/custom-widget.stub'), "<?php\n\nnamespace {{ namespace }};\n\nfinal class {{ class }}\n{\n    public const CUSTOM = true;\n}\n");
+
+    config([
+        'essentials.ddd_substitutions' => ['widget' => 'Widgets'],
+        'essentials.ddd_stubs' => ['widget' => 'stubs/ddd/custom-widget.stub'],
+    ]);
+
+    $this->artisan('ddd:make', ['name' => 'PostWidget', '--type' => 'widget', '--domain' => 'Posts'])
+        ->assertSuccessful();
+
+    $path = base_path('src/Domain/Posts/Widgets/PostWidget.php');
+
+    expect(File::exists($path))->toBeTrue();
+    expect(File::get($path))->toContain('CUSTOM = true');
 });
 
 it('has a stub for every built-in type', function (string $type) {

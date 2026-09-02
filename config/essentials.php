@@ -74,6 +74,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | DDD Stub Overrides
+    |--------------------------------------------------------------------------
+    |
+    | Map a type to a stub file when it should not come from
+    | base_path("stubs/{type}.ddd.stub") or the package's bundled stub.
+    | Relative paths resolve from the application's base path.
+    |
+    */
+
+    'ddd_stubs' => env('ESSENTIALS_DDD_STUBS', [
+        // 'action' => 'stubs/ddd/custom-action.stub',
+    ]),
+
+    /*
+    |--------------------------------------------------------------------------
     | Layers
     |--------------------------------------------------------------------------
     |
