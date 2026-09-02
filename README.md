@@ -34,12 +34,6 @@ Or, you may publish each resource individually:
 php artisan vendor:publish --tag="essentials-config"
 ```
 
-### Publishing the Translations
-
-```bash
-php artisan vendor:publish --tag="essentials-lang"
-```
-
 ## Usage
 
 Once installed, Laravel Essentials applies a set of sensible defaults automatically — no code required:

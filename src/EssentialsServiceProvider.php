@@ -27,7 +27,7 @@ class EssentialsServiceProvider extends ServiceProvider
 
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'essentials');
 
-        $this->loadTranslationsFrom(__DIR__.'/../lang', 'essentials');
+        // $this->loadTranslationsFrom(__DIR__.'/../lang', 'essentials');
 
         $this->app->booted(function (): void {
             $this->app->make(Essentials::class)->configure();
@@ -45,9 +45,9 @@ class EssentialsServiceProvider extends ServiceProvider
         //     __DIR__.'/../resources/views' => resource_path('views/vendor/essentials'),
         // ], ['essentials', 'essentials-views']);
 
-        $this->publishes([
-            __DIR__.'/../lang' => $this->app->langPath('vendor/essentials'),
-        ], ['essentials', 'essentials-lang']);
+        // $this->publishes([
+        //     __DIR__.'/../lang' => $this->app->langPath('vendor/essentials'),
+        // ], ['essentials', 'essentials-lang']);
 
         // $this->publishes([
         //     __DIR__.'/../public' => public_path('vendor/essentials'),
