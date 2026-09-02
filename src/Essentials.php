@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Essentials\Essentials;
+namespace Foxws\Essentials;
 
 class Essentials
 {
