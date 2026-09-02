@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Foxws\Essentials;
 
-use Foxws\Essentials\Console\Commands\DddActionMakeCommand;
 use Foxws\Essentials\Console\Commands\DddInstallCommand;
-use Foxws\Essentials\Console\Commands\DddModelMakeCommand;
+use Foxws\Essentials\Console\Commands\DddMakeCommand;
+use Foxws\Essentials\Console\Commands\DddMakeDomainCommand;
+use Foxws\Essentials\Console\Commands\DddMakeFoundationCommand;
+use Foxws\Essentials\Console\Commands\DddMakeModuleCommand;
+use Foxws\Essentials\Console\Commands\DddMakeSupportCommand;
 use Illuminate\Support\ServiceProvider;
 
 class EssentialsServiceProvider extends ServiceProvider
@@ -57,9 +60,12 @@ class EssentialsServiceProvider extends ServiceProvider
         ], ['essentials', 'essentials-migrations']);
 
         $this->commands([
-            DddActionMakeCommand::class,
             DddInstallCommand::class,
-            DddModelMakeCommand::class,
+            DddMakeCommand::class,
+            DddMakeDomainCommand::class,
+            DddMakeFoundationCommand::class,
+            DddMakeModuleCommand::class,
+            DddMakeSupportCommand::class,
         ]);
     }
 }

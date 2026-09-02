@@ -4,35 +4,89 @@ declare(strict_types=1);
 
 namespace Foxws\Essentials\Console\Commands;
 
-use Closure;
 use Foxws\Essentials\Support\DddSubstitutions;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 
-abstract class DddMakeCommand extends GeneratorCommand
+class DddMakeCommand extends GeneratorCommand
 {
     /**
-     * The DddSubstitutions key for this generator's type, e.g. "model", "action".
+     * The command signature.
      */
-    protected string $substitution;
+    protected $signature = 'ddd:make
+        {name : The name of the class}
+        {--type= : The type of class to generate, e.g. model, action}
+        {--domain= : The domain the class belongs to; guessed from the name if omitted}
+        {--layer=Domain : The layer to generate into}
+        {--force : Create the class even if it already exists}';
 
     /**
-     * The essentials.layers key this generator targets, e.g. "Domain", "Modules".
+     * The command description.
      */
-    protected string $layer = 'Domain';
+    protected $description = 'Create a new DDD class';
 
     /**
      * Execute the console command.
      */
     public function handle(): int|bool|null
     {
-        if (config("essentials.layers.{$this->layer}") === null) {
-            $this->components->error("The \"{$this->layer}\" layer is not configured or has been disabled in essentials.layers.");
+        $type = $this->option('type');
+
+        if (! is_string($type) || $type === '') {
+            $this->components->error('The --type option is required, e.g. --type=action.');
 
             return self::FAILURE;
         }
 
+        if (! array_key_exists($type, DddSubstitutions::get())) {
+            $this->components->error(sprintf(
+                'Unknown type "%s". Available types: %s.',
+                $type,
+                implode(', ', array_keys(DddSubstitutions::get())),
+            ));
+
+            return self::FAILURE;
+        }
+
+        if (! file_exists($this->resolveStubPath("/stubs/{$type}.ddd.stub"))) {
+            $this->components->error("No stub found for type \"{$type}\". Expected stubs/{$type}.ddd.stub, or publish your own to base_path('stubs/{$type}.ddd.stub').");
+
+            return self::FAILURE;
+        }
+
+        if (config("essentials.layers.{$this->layer()}") === null) {
+            $this->components->error("The \"{$this->layer()}\" layer is not configured or has been disabled in essentials.layers.");
+
+            return self::FAILURE;
+        }
+
+        $this->type = Str::studly($type);
+
         return parent::handle();
+    }
+
+    /**
+     * Get the configured layer for this generator.
+     */
+    protected function layer(): string
+    {
+        $layer = $this->option('layer');
+
+        return is_string($layer) ? $layer : 'Domain';
+    }
+
+    /**
+     * Get the domain the class belongs to, guessing it from the name if not given.
+     */
+    protected function domain(): string
+    {
+        if (is_string($domain = $this->option('domain')) && $domain !== '') {
+            return $domain;
+        }
+
+        preg_match_all('/[A-Z][a-z0-9]*/', Str::studly($this->getNameInput()), $words);
+
+        return $words[0] === [] ? $this->getNameInput() : (string) end($words[0]);
     }
 
     /**
@@ -40,7 +94,7 @@ abstract class DddMakeCommand extends GeneratorCommand
      */
     protected function rootNamespace(): string
     {
-        return rtrim((string) config("essentials.layers.{$this->layer}.namespace"), '\\').'\\';
+        return rtrim((string) config("essentials.layers.{$this->layer()}.namespace"), '\\').'\\';
     }
 
     /**
@@ -50,13 +104,12 @@ abstract class DddMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        $domain = $this->argument('domain');
+        $namespace = rtrim($rootNamespace, '\\').'\\'.Str::studly($this->domain());
 
-        $namespace = rtrim($rootNamespace, '\\').'\\'.Str::studly(is_string($domain) ? $domain : '');
+        $type = $this->option('type');
+        $substitution = DddSubstitutions::get()[is_string($type) ? $type : ''] ?? '';
 
-        $type = DddSubstitutions::get()[$this->substitution] ?? '';
-
-        return $type !== '' ? $namespace.'\\'.$type : $namespace;
+        return $substitution !== '' ? $namespace.'\\'.$substitution : $namespace;
     }
 
     /**
@@ -68,9 +121,20 @@ abstract class DddMakeCommand extends GeneratorCommand
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        $layerPath = rtrim((string) config("essentials.layers.{$this->layer}.path"), '/');
+        $layerPath = rtrim((string) config("essentials.layers.{$this->layer()}.path"), '/');
 
         return base_path($layerPath.'/'.str_replace('\\', '/', $name).'.php');
+    }
+
+    /**
+     * Get the stub file for the generator.
+     */
+    protected function getStub(): string
+    {
+        $type = $this->option('type');
+        $type = is_string($type) ? $type : '';
+
+        return $this->resolveStubPath("/stubs/{$type}.ddd.stub");
     }
 
     /**
@@ -84,14 +148,16 @@ abstract class DddMakeCommand extends GeneratorCommand
     }
 
     /**
-     * Prompt for missing input arguments using the returned questions.
+     * Build the class with the given name.
      *
-     * @return array<string, string|array{string, string}|Closure(): (array<int, string>|string|int|bool)>
+     * @param  string  $name
      */
-    protected function promptForMissingArgumentsUsing(): array
+    protected function buildClass($name): string
     {
-        return array_merge(parent::promptForMissingArgumentsUsing(), [
-            'domain' => ['Which domain does this belong to?', 'E.g. Posts'],
-        ]);
+        return str_replace(
+            ['{{ factoryImport }}', '{{factoryImport}}', '{{ factory }}', '{{factory}}'],
+            '',
+            parent::buildClass($name),
+        );
     }
 }
