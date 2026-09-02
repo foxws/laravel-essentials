@@ -12,7 +12,7 @@ beforeEach(function () {
 afterEach(function () {
     File::put($this->composerPath, $this->originalComposer);
 
-    foreach (['app/Domain', 'app/Modules', 'app/Foundation', 'app/Infrastructure', 'app/Integrations', 'app/Support'] as $path) {
+    foreach (['src/Domain', 'src/Modules', 'src/Foundation', 'src/Infrastructure', 'src/Integrations', 'src/Support'] as $path) {
         File::deleteDirectory(base_path($path));
     }
 });
@@ -23,20 +23,20 @@ it('adds the domain driven design autoload mappings to composer.json', function 
     $composer = json_decode(File::get($this->composerPath), true);
 
     expect($composer['autoload']['psr-4'])
-        ->toHaveKey('Domain\\', 'app/Domain/')
-        ->toHaveKey('Modules\\', 'app/Modules/')
-        ->toHaveKey('Foundation\\', 'app/Foundation/')
-        ->toHaveKey('Support\\', 'app/Support/');
+        ->toHaveKey('Domain\\', 'src/Domain/')
+        ->toHaveKey('Modules\\', 'src/Modules/')
+        ->toHaveKey('Foundation\\', 'src/Foundation/')
+        ->toHaveKey('Support\\', 'src/Support/');
 
-    expect($composer['autoload']['files'])->toContain('app/Foundation/Helpers.php');
+    expect($composer['autoload']['files'])->toContain('src/Foundation/Helpers.php');
 });
 
 it('creates the domain driven design directories and helper file', function () {
     $this->artisan('ddd:install', ['--no-dump-autoload' => true])->assertSuccessful();
 
-    expect(File::isDirectory(base_path('app/Domain')))->toBeTrue();
-    expect(File::isDirectory(base_path('app/Modules')))->toBeTrue();
-    expect(File::exists(base_path('app/Foundation/Helpers.php')))->toBeTrue();
+    expect(File::isDirectory(base_path('src/Domain')))->toBeTrue();
+    expect(File::isDirectory(base_path('src/Modules')))->toBeTrue();
+    expect(File::exists(base_path('src/Foundation/Helpers.php')))->toBeTrue();
 });
 
 it('is idempotent on a second run', function () {
@@ -70,5 +70,5 @@ it('overwrites a conflicting namespace with --force', function () {
 
     $composer = json_decode(File::get($this->composerPath), true);
 
-    expect($composer['autoload']['psr-4']['Domain\\'])->toBe('app/Domain/');
+    expect($composer['autoload']['psr-4']['Domain\\'])->toBe('src/Domain/');
 });

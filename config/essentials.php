@@ -87,32 +87,32 @@ return [
 
         'Domain' => [
             'namespace' => env('ESSENTIALS_DOMAIN_NAMESPACE', 'Domain'),
-            'path' => env('ESSENTIALS_DOMAIN_PATH', 'app/Domain'),
+            'path' => env('ESSENTIALS_DOMAIN_PATH', 'src/Domain'),
         ],
 
         'Modules' => [
             'namespace' => env('ESSENTIALS_MODULES_NAMESPACE', 'Modules'),
-            'path' => env('ESSENTIALS_MODULES_PATH', 'app/Modules'),
+            'path' => env('ESSENTIALS_MODULES_PATH', 'src/Modules'),
         ],
 
         'Foundation' => [
             'namespace' => env('ESSENTIALS_FOUNDATION_NAMESPACE', 'Foundation'),
-            'path' => env('ESSENTIALS_FOUNDATION_PATH', 'app/Foundation'),
+            'path' => env('ESSENTIALS_FOUNDATION_PATH', 'src/Foundation'),
         ],
 
         'Infrastructure' => [
             'namespace' => env('ESSENTIALS_INFRASTRUCTURE_NAMESPACE', 'Infrastructure'),
-            'path' => env('ESSENTIALS_INFRASTRUCTURE_PATH', 'app/Infrastructure'),
+            'path' => env('ESSENTIALS_INFRASTRUCTURE_PATH', 'src/Infrastructure'),
         ],
 
         'Integrations' => [
             'namespace' => env('ESSENTIALS_INTEGRATIONS_NAMESPACE', 'Integrations'),
-            'path' => env('ESSENTIALS_INTEGRATIONS_PATH', 'app/Integrations'),
+            'path' => env('ESSENTIALS_INTEGRATIONS_PATH', 'src/Integrations'),
         ],
 
         'Support' => [
             'namespace' => env('ESSENTIALS_SUPPORT_NAMESPACE', 'Support'),
-            'path' => env('ESSENTIALS_SUPPORT_PATH', 'app/Support'),
+            'path' => env('ESSENTIALS_SUPPORT_PATH', 'src/Support'),
         ],
 
     ],
