@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Foxws\Essentials\Configurables\AggressivePrefetching;
 use Foxws\Essentials\Configurables\AutomaticallyEagerLoadRelationships;
 use Foxws\Essentials\Configurables\EnforceMorphMap;
@@ -27,7 +28,7 @@ return [
     |
     */
 
-    'configurables' => [
+    'configurables' => env('ESSENTIALS_CONFIGURABLES', [
         AggressivePrefetching::class,
         AutomaticallyEagerLoadRelationships::class,
         EnforceMorphMap::class,
@@ -39,7 +40,7 @@ return [
         PreventStrayRequests::class,
         ProhibitDestructiveCommands::class,
         ResourceWithoutWrapping::class,
-    ],
+    ]),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,9 +52,69 @@ return [
     |
     */
 
-    'morph_map' => [
+    'morph_map' => env('ESSENTIALS_MORPH_MAP', [
         // 'user' => App\Models\User::class,
         // 'post' => App\Models\Post::class,
+    ]),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Domain Driven Design (DDD) Configuration
+    |--------------------------------------------------------------------------
+    |
+    | You can add any additional configuration options for your application here.
+    |
+    */
+
+    'ddd_enabled' => env('ESSENTIALS_DDD', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Domain Namespace and Path
+    |--------------------------------------------------------------------------
+    |
+    | These options define the namespace and path for your domain layer.
+    | You can customize these values to fit your application's structure.
+    |
+    */
+
+    'domain_namespace' => env('ESSENTIALS_DOMAIN_NAMESPACE', 'Domain'),
+
+    'domain_path' => env('ESSENTIALS_DOMAIN_PATH', base_path('src/Domain')),
+
+    'domain_substitutions' => env('ESSENTIALS_DOMAIN_SUBSTITUTIONS', [
+        // 'action' => 'CustomActions',
+    ]),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Namespace and Path
+    |--------------------------------------------------------------------------
+    |
+    | These options define the namespace and path for your application layer.
+    | You can customize these values to fit your application's structure.
+    |
+    */
+
+    'application_namespace' => env('ESSENTIALS_APP_NAMESPACE', 'App/Modules'),
+
+    'application_path' => env('ESSENTIALS_APP_PATH', base_path('src/App/Modules')),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Layers
+    |--------------------------------------------------------------------------
+    |
+    | Additional top-level namespaces and paths that should be recognized as
+    | layers when generating ddd:* objects.
+    |
+    */
+
+    'layers' => [
+        'Foundation' => env('ESSENTIALS_FOUNDATION_PATH', 'src/Foundation'),
+        'Infrastructure' => env('ESSENTIALS_INFRASTRUCTURE_PATH', 'src/Infrastructure'),
+        'Integrations' => env('ESSENTIALS_INTEGRATIONS_PATH', 'src/Integrations'),
+        'Support' => env('ESSENTIALS_SUPPORT_PATH', 'src/Support'),
     ],
 
 ];
