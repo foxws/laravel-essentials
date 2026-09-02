@@ -16,8 +16,8 @@ final readonly class ForceSecurePassword implements Configurable
 
     public function configure(): void
     {
-        Password::defaults(fn (): ?Password => Password::min(12)
-            ->max(24)
+        Password::defaults(fn (): Password => Password::min(12)
+            ->max(64)
             ->letters()
             ->mixedCase()
             ->numbers()

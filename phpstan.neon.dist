@@ -6,3 +6,5 @@ parameters:
         - database
         - routes
     tmpDir: build/phpstan
+    configDirectories:
+        - %currentWorkingDirectory%/config

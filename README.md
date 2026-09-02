@@ -61,7 +61,20 @@ php artisan vendor:publish --tag="laravel-essentials-assets"
 
 ## Usage
 
-<!-- Add a basic usage example here. -->
+Once installed, Laravel Essentials applies a set of sensible defaults automatically — no code required:
+
+```php
+// Model::shouldBeStrict(), URL::forceHttps(), Date::use(CarbonImmutable::class), and more.
+```
+
+It also adds Domain Driven Design scaffolding commands:
+
+```bash
+php artisan ddd:install
+php artisan ddd:make CreateInvoice --type=action --domain=Billing
+```
+
+See the [documentation](docs/README.md) for the full list of defaults, how to enable or disable them, and how the DDD commands work.
 
 ## Changelog
 
