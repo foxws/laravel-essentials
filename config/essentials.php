@@ -85,31 +85,37 @@ return [
 
     'layers' => [
 
+        // Framework-agnostic business logic.
         'Domain' => [
             'namespace' => env('ESSENTIALS_DOMAIN_NAMESPACE', 'Domain'),
             'path' => env('ESSENTIALS_DOMAIN_PATH', 'src/Domain'),
         ],
 
+        // Laravel-facing code (controllers, requests, middleware) that orchestrates Domain.
         'Modules' => [
             'namespace' => env('ESSENTIALS_MODULES_NAMESPACE', 'Modules'),
             'path' => env('ESSENTIALS_MODULES_PATH', 'src/Modules'),
         ],
 
+        // Base classes, core providers, and shared helpers.
         'Foundation' => [
             'namespace' => env('ESSENTIALS_FOUNDATION_NAMESPACE', 'Foundation'),
             'path' => env('ESSENTIALS_FOUNDATION_PATH', 'src/Foundation'),
         ],
 
-        'Infrastructure' => [
-            'namespace' => env('ESSENTIALS_INFRASTRUCTURE_NAMESPACE', 'Infrastructure'),
-            'path' => env('ESSENTIALS_INFRASTRUCTURE_PATH', 'src/Infrastructure'),
-        ],
+        // Concrete adapters to external systems (repositories, storage, queues).
+        // 'Infrastructure' => [
+        //     'namespace' => env('ESSENTIALS_INFRASTRUCTURE_NAMESPACE', 'Infrastructure'),
+        //     'path' => env('ESSENTIALS_INFRASTRUCTURE_PATH', 'src/Infrastructure'),
+        // ],
 
-        'Integrations' => [
-            'namespace' => env('ESSENTIALS_INTEGRATIONS_NAMESPACE', 'Integrations'),
-            'path' => env('ESSENTIALS_INTEGRATIONS_PATH', 'src/Integrations'),
-        ],
+        // Third-party service integrations (payments, notifications, etc.).
+        // 'Integrations' => [
+        //     'namespace' => env('ESSENTIALS_INTEGRATIONS_NAMESPACE', 'Integrations'),
+        //     'path' => env('ESSENTIALS_INTEGRATIONS_PATH', 'src/Integrations'),
+        // ],
 
+        // Generic, cross-cutting helpers that don't belong to a specific layer.
         'Support' => [
             'namespace' => env('ESSENTIALS_SUPPORT_NAMESPACE', 'Support'),
             'path' => env('ESSENTIALS_SUPPORT_PATH', 'src/Support'),
