@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Foxws\Essentials;
 
-use Foxws\Essentials\Console\Commands\EssentialsCommand;
+use Foxws\Essentials\Console\Commands\DddInstallCommand;
 use Illuminate\Support\ServiceProvider;
 
 class EssentialsServiceProvider extends ServiceProvider
@@ -55,7 +55,7 @@ class EssentialsServiceProvider extends ServiceProvider
         ], ['essentials', 'essentials-migrations']);
 
         $this->commands([
-            EssentialsCommand::class,
+            DddInstallCommand::class,
         ]);
     }
 }
