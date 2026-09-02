@@ -6,10 +6,10 @@ namespace Foxws\Essentials\Support;
 
 use Illuminate\Support\Facades\Config;
 
-class DomainSubstitutions
+class DddSubstitutions
 {
     /**
-     * Get the domain substitutions for the application.
+     * Get the type-to-subfolder substitutions used when generating DDD objects.
      *
      * @return array<string, string>
      */
@@ -55,7 +55,7 @@ class DomainSubstitutions
     }
 
     /**
-     * Get the custom domain substitutions for the application.
+     * Get the custom substitutions configured for the application.
      *
      * @return array<string, string>
      */
