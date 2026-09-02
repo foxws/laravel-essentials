@@ -53,8 +53,8 @@ return [
     */
 
     'morph_map' => env('ESSENTIALS_MORPH_MAP', [
-        // 'user' => App\Models\User::class,
-        // 'post' => App\Models\Post::class,
+        // 'user' => Domain\Users\Models\User::class,
+        // 'post' => Domain\Posts\Models\Post::class,
     ]),
 
     /*
