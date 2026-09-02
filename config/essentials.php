@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'ddd_enabled' => env('ESSENTIALS_DDD', false),
+    'ddd_enabled' => env('ESSENTIALS_DDD', true),
 
     /*
     |--------------------------------------------------------------------------
