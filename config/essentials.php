@@ -41,4 +41,19 @@ return [
         ResourceWithoutWrapping::class,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Model Morph Map
+    |--------------------------------------------------------------------------
+    |
+    | This array defines the morph map for your Eloquent models.
+    | The morph map allows you to customize the names used for polymorphic relationships.
+    |
+    */
+
+    'morph_map' => [
+        // 'user' => App\Models\User::class,
+        // 'post' => App\Models\Post::class,
+    ],
+
 ];
