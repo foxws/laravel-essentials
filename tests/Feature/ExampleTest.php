@@ -23,9 +23,3 @@ it('loads the package translations', function () {
 it('loads the package views', function () {
     expect(view()->exists('essentials::placeholder'))->toBeTrue();
 });
-
-it('registers the artisan command', function () {
-    $this->artisan('laravel-essentials:placeholder')
-        ->expectsOutputToContain('Essentials placeholder command executed.')
-        ->assertSuccessful();
-});

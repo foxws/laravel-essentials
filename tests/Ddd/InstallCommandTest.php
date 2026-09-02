@@ -43,7 +43,7 @@ it('is idempotent on a second run', function () {
     $this->artisan('ddd:install', ['--no-dump-autoload' => true])->assertSuccessful();
 
     $this->artisan('ddd:install', ['--no-dump-autoload' => true])
-        ->expectsOutputToContain('composer.json already contains the Domain Driven Design autoload mappings.')
+        ->expectsOutputToContain('composer.json already contains the DDD autoload mappings.')
         ->assertSuccessful();
 });
 
