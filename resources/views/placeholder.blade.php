@@ -1,1 +1,1 @@
-<div>Skeleton placeholder view.</div>
+<div>Essentials placeholder view.</div>
