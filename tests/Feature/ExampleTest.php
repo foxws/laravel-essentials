@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Essentials\Essentials\Essentials;
+use Foxws\Essentials\Essentials;
 
 it('resolves the singleton', function () {
     expect(app(Essentials::class))->toBeInstanceOf(Essentials::class);
@@ -13,19 +13,9 @@ it('returns the same instance from the container', function () {
 });
 
 it('merges the package config', function () {
-    expect(config('laravel-essentials.placeholder'))->toBe('default');
+    expect(config('essentials.layers.Domain.namespace'))->toBe('Domain');
 });
 
 it('loads the package translations', function () {
-    expect(trans('laravel-essentials::messages.placeholder'))->toBe('Essentials placeholder translation.');
-});
-
-it('loads the package views', function () {
-    expect(view()->exists('laravel-essentials::placeholder'))->toBeTrue();
-});
-
-it('registers the artisan command', function () {
-    $this->artisan('laravel-essentials:placeholder')
-        ->expectsOutputToContain('Essentials placeholder command executed.')
-        ->assertSuccessful();
+    expect(trans('essentials::messages.placeholder'))->toBe('Essentials placeholder translation.');
 });

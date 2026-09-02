@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Essentials\Essentials\Facades;
+namespace Foxws\Essentials\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Essentials\Essentials\Essentials
+ * @see \Foxws\Essentials\Essentials
  */
 class Essentials extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \Essentials\Essentials\Essentials::class;
+        return \Foxws\Essentials\Essentials::class;
     }
 }

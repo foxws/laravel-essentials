@@ -2,9 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Essentials\Essentials;
+namespace Foxws\Essentials;
 
-use Essentials\Essentials\Console\Commands\EssentialsCommand;
+use Foxws\Essentials\Console\Commands\DddInstallCommand;
+use Foxws\Essentials\Console\Commands\DddMakeCommand;
+use Foxws\Essentials\Console\Commands\DddMakeDomainCommand;
+use Foxws\Essentials\Console\Commands\DddMakeFoundationCommand;
+use Foxws\Essentials\Console\Commands\DddMakeModuleCommand;
+use Foxws\Essentials\Console\Commands\DddMakeSupportCommand;
 use Illuminate\Support\ServiceProvider;
 
 class EssentialsServiceProvider extends ServiceProvider
@@ -14,7 +19,7 @@ class EssentialsServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/laravel-essentials.php', 'laravel-essentials');
+        $this->mergeConfigFrom(__DIR__.'/../config/essentials.php', 'essentials');
 
         $this->app->singleton(Essentials::class);
     }
@@ -24,38 +29,47 @@ class EssentialsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/laravel-essentials.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/essentials.php');
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-essentials');
+        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'essentials');
 
-        $this->loadTranslationsFrom(__DIR__.'/../lang', 'laravel-essentials');
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'essentials');
+
+        $this->app->booted(function (): void {
+            $this->app->make(Essentials::class)->configure();
+        });
 
         if (! $this->app->runningInConsole()) {
             return;
         }
 
         $this->publishes([
-            __DIR__.'/../config/laravel-essentials.php' => config_path('laravel-essentials.php'),
-        ], ['laravel-essentials', 'laravel-essentials-config']);
+            __DIR__.'/../config/essentials.php' => config_path('essentials.php'),
+        ], ['essentials', 'essentials-config']);
+
+        // $this->publishes([
+        //     __DIR__.'/../resources/views' => resource_path('views/vendor/essentials'),
+        // ], ['essentials', 'essentials-views']);
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/laravel-essentials'),
-        ], ['laravel-essentials', 'laravel-essentials-views']);
+            __DIR__.'/../lang' => $this->app->langPath('vendor/essentials'),
+        ], ['essentials', 'essentials-lang']);
 
-        $this->publishes([
-            __DIR__.'/../lang' => $this->app->langPath('vendor/laravel-essentials'),
-        ], ['laravel-essentials', 'laravel-essentials-lang']);
+        // $this->publishes([
+        //     __DIR__.'/../public' => public_path('vendor/essentials'),
+        // ], ['essentials', 'essentials-assets']);
 
-        $this->publishes([
-            __DIR__.'/../public' => public_path('vendor/laravel-essentials'),
-        ], ['laravel-essentials', 'laravel-essentials-assets']);
-
-        $this->publishesMigrations([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], ['laravel-essentials', 'laravel-essentials-migrations']);
+        // $this->publishesMigrations([
+        //     __DIR__.'/../database/migrations' => database_path('migrations'),
+        // ], ['essentials', 'essentials-migrations']);
 
         $this->commands([
-            EssentialsCommand::class,
+            DddInstallCommand::class,
+            DddMakeCommand::class,
+            DddMakeDomainCommand::class,
+            DddMakeFoundationCommand::class,
+            DddMakeModuleCommand::class,
+            DddMakeSupportCommand::class,
         ]);
     }
 }

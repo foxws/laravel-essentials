@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Essentials\Essentials\Tests;
+namespace Foxws\Essentials\Tests;
 
-use Essentials\Essentials\EssentialsServiceProvider;
+use Foxws\Essentials\EssentialsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
