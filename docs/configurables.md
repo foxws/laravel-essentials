@@ -21,20 +21,20 @@ After the application boots, `Foxws\Essentials\Essentials::configure()` filters 
 
 ## Built-in Configurables
 
-| Configurable | Enabled when | What it does |
-| --- | --- | --- |
-| `AggressivePrefetching` | Always | `Vite::useAggressivePrefetching()` |
-| `AutomaticallyEagerLoadRelationships` | Always | `Model::automaticallyEagerLoadRelationships()` |
-| `EnforceMorphMap` | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)` |
-| `FakeSleep` | Running unit tests | `Sleep::fake()` |
-| `ForceHttpsScheme` | Always | `URL::forceHttps()` |
-| `ForceSecurePassword` | Running in production | `Password::defaults()` with a 12–64 char, mixed-case, numbers, symbols, and "uncompromised" policy |
-| `ImmutableDates` | Always | `Date::use(CarbonImmutable::class)` |
-| `ModelShouldBeStrict` | Always | `Model::shouldBeStrict()` |
-| `ModelUnguard` | Always | `Model::unguard()` |
-| `PreventStrayRequests` | Running unit tests | `Http::preventStrayRequests()` |
-| `ProhibitDestructiveCommands` | Running in production | `DB::prohibitDestructiveCommands()` |
-| `ResourceWithoutWrapping` | Always | `JsonResource::withoutWrapping()` |
+| Configurable                          | Enabled when                        | What it does                                                                                       |
+| ------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `AggressivePrefetching`               | Always                              | `Vite::useAggressivePrefetching()`                                                                 |
+| `AutomaticallyEagerLoadRelationships` | Always                              | `Model::automaticallyEagerLoadRelationships()`                                                     |
+| `EnforceMorphMap`                     | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)`                                                                   |
+| `FakeSleep`                           | Running unit tests                  | `Sleep::fake()`                                                                                    |
+| `ForceHttpsScheme`                    | Always                              | `URL::forceHttps()`                                                                                |
+| `ForceSecurePassword`                 | Running in production               | `Password::defaults()` with a 12–64 char, mixed-case, numbers, symbols, and "uncompromised" policy |
+| `ImmutableDates`                      | Always                              | `Date::use(CarbonImmutable::class)`                                                                |
+| `ModelShouldBeStrict`                 | Always                              | `Model::shouldBeStrict()`                                                                          |
+| `ModelUnguard`                        | Opt-in                              | `Model::unguard()`                                                                                 |
+| `PreventStrayRequests`                | Running unit tests                  | `Http::preventStrayRequests()`                                                                     |
+| `ProhibitDestructiveCommands`         | Running in production               | `DB::prohibitDestructiveCommands()`                                                                |
+| `ResourceWithoutWrapping`             | Always                              | `JsonResource::withoutWrapping()`                                                                  |
 
 Enable, disable, or reorder configurables by publishing the config file and editing the `configurables` array:
 
