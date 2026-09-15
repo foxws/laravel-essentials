@@ -1,10 +1,21 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/0.0.1...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/0.0.2...HEAD)
 
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
+
+## [0.0.2](https://github.com/foxws/laravel-essentials/compare/0.0.1...0.0.2) - 2026-09-15
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+### What's Changed
+
+#### Other Changes
+
+* docs: complete bundled Boost skill for laravel-essentials by @francoism90 in https://github.com/foxws/laravel-essentials/pull/3
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/0.0.1...0.0.2
 
 ## [0.0.1](https://github.com/foxws/laravel-essentials/compare/v0.1.0...0.0.1) - 2026-09-03
 
