@@ -1,10 +1,21 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/0.0.2...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/0.0.3...HEAD)
 
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
+
+## [0.0.3](https://github.com/foxws/laravel-essentials/compare/0.0.2...0.0.3) - 2026-09-16
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+### What's Changed
+
+#### Other Changes
+
+* Docs/laravel docs metadata by @francoism90 in https://github.com/foxws/laravel-essentials/pull/4
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/0.0.2...0.0.3
 
 ## [0.0.2](https://github.com/foxws/laravel-essentials/compare/0.0.1...0.0.2) - 2026-09-15
 
