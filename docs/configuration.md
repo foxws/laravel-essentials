@@ -1,6 +1,11 @@
+---
+section: Reference
+order: 1
+---
+
 # Configuration Reference
 
-Publish the config file to customize any of these options:
+Publish the config file to change any of these options:
 
 ```bash
 php artisan vendor:publish --tag="essentials-config"
@@ -8,12 +13,12 @@ php artisan vendor:publish --tag="essentials-config"
 
 | Key | Env | Default | Description |
 | --- | --- | --- | --- |
-| `configurables` | `ESSENTIALS_CONFIGURABLES` | see [Configurables](configurables.md#built-in-configurables) | Configurable classes applied on boot. |
-| `morph_map` | `ESSENTIALS_MORPH_MAP` | `[]` | `alias => Model::class` pairs enforced via `Relation::enforceMorphMap()`. |
+| `configurables` | `ESSENTIALS_CONFIGURABLES` | see [Configurables](configurables.md#built-in-configurables) | The list of configurable classes to apply on boot. |
+| `morph_map` | `ESSENTIALS_MORPH_MAP` | `[]` | `alias => Model::class` pairs, enforced with `Relation::enforceMorphMap()`. |
 
-See [Configurables](configurables.md) for `configurables`.
+See [Configurables](configurables.md) for what each entry in `configurables` does.
 
-## Morph Map Example
+## Morph map example
 
 ```php
 // config/essentials.php
