@@ -42,9 +42,7 @@ Once installed, Laravel Essentials applies a set of sensible defaults automatica
 // Model::shouldBeStrict(), URL::forceHttps(), Date::use(CarbonImmutable::class), and more.
 ```
 
-See the [documentation](docs/index.md) for the full list of defaults and how to enable or disable them.
-
-Looking for Domain Driven Design scaffolding (`ddd:install`, `ddd:make`)? That's now the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package.
+See the [documentation](https://foxws.nl/laravel-essentials) for the full list of defaults and how to enable or disable them.
 
 ## Changelog
 
