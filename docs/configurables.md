@@ -1,8 +1,13 @@
+---
+section: Usage
+order: 1
+---
+
 # Configurables
 
-Laravel Essentials applies a set of opinionated defaults once your application has booted. Each default is a small class called a "configurable".
+Laravel Essentials turns on a set of opinionated defaults once your app has booted. Each default is a small class called a "configurable".
 
-## How It Works
+## How it works
 
 Every configurable implements `Foxws\Essentials\Contracts\Configurable`:
 
@@ -17,12 +22,12 @@ interface Configurable
 }
 ```
 
-After the application boots, `Foxws\Essentials\Essentials::configure()` filters the configured list down to the ones whose `enabled()` returns `true`, then calls `configure()` on each. This happens automatically — you don't need to call anything yourself.
+After your app boots, `Foxws\Essentials\Essentials::configure()` looks at every configurable in the list, keeps only the ones whose `enabled()` returns `true`, and calls `configure()` on each of those. This happens automatically — you don't need to call anything yourself.
 
-## Built-in Configurables
+## Built-in configurables
 
-| Configurable                          | Enabled when                        | What it does                                                                                       |
-| ------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Configurable                          | Enabled when                        | What it does                                                                                        |
+| -------------------------------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------- |
 | `AggressivePrefetching`               | Always                              | `Vite::useAggressivePrefetching()`                                                                 |
 | `AutomaticallyEagerLoadRelationships` | Always                              | `Model::automaticallyEagerLoadRelationships()`                                                     |
 | `EnforceMorphMap`                     | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)`                                                                   |
@@ -36,10 +41,10 @@ After the application boots, `Foxws\Essentials\Essentials::configure()` filters 
 | `ProhibitDestructiveCommands`         | Running in production               | `DB::prohibitDestructiveCommands()`                                                                |
 | `ResourceWithoutWrapping`             | Always                              | `JsonResource::withoutWrapping()`                                                                  |
 
-Enable, disable, or reorder configurables by publishing the config file and editing the `configurables` array:
+Want to change which ones run, or the order they run in? Publish the config file and edit the `configurables` array:
 
 ```bash
-php artisan vendor:publish --tag="laravel-essentials-config"
+php artisan vendor:publish --tag="essentials-config"
 ```
 
 ```php
@@ -51,7 +56,7 @@ php artisan vendor:publish --tag="laravel-essentials-config"
 ],
 ```
 
-## Writing Your Own Configurable
+## Writing your own configurable
 
 ```php
 namespace App\Configurables;
@@ -73,7 +78,7 @@ final readonly class UseUtcTimezone implements Configurable
 }
 ```
 
-Add it to `config('essentials.configurables')`, or register it at runtime — for example from your own package's service provider:
+Add it to `config('essentials.configurables')`, or register it while your app is running — for example, from your own package's service provider:
 
 ```php
 use App\Configurables\UseUtcTimezone;
