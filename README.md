@@ -12,6 +12,8 @@
 
 Essentials for Laravel projects
 
+Inspired by [nunomaduro/essentials](https://github.com/nunomaduro/essentials), but configured differently: instead of an opt-out `disabled` array, each default here is a class that decides for itself whether it applies (via `enabled()`), is listed explicitly in an opt-in `configurables` array, and can be registered at runtime with `Essentials::extend()` — so other packages can ship their own defaults without the consuming app touching config at all.
+
 ## Installation
 
 You can install the package via Composer:
@@ -60,6 +62,7 @@ Please review [our security policy](.github/SECURITY.md) on how to report securi
 
 - [foxws](https://github.com/foxws)
 - [All Contributors](../../contributors)
+- [nunomaduro/essentials](https://github.com/nunomaduro/essentials), for the original idea
 
 ## License
 
