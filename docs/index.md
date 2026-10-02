@@ -2,6 +2,7 @@
 title: Introduction
 metadata:
   role: Defaults
+  group: foundations
   eyebrow: "Opinionated Defaults · Boot-time Config"
   desc: "Sensible Laravel defaults, applied automatically on boot."
   requires: "PHP ^8.4"
