@@ -3,11 +3,16 @@ title: Introduction
 metadata:
   role: Defaults
   group: foundations
-  eyebrow: "Opinionated Defaults · Boot-time Config"
+  eyebrow: "Defaults · Strict Models · HTTPS"
   desc: "Sensible Laravel defaults, applied automatically on boot."
+  lead: "Strict models, forced HTTPS and other sensible defaults, switched on at boot. Choose the ones you want, or write your own."
   requires: "PHP ^8.4"
   laravel: "13.x"
   licence: MIT
+  used_by:
+    name: Stry
+    desc: "A self-hosted video streaming app."
+    href: "https://github.com/francoism90/stry"
 ---
 
 # Introduction
