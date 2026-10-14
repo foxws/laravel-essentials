@@ -36,6 +36,16 @@ Or, you may publish each resource individually:
 php artisan vendor:publish --tag="essentials-config"
 ```
 
+> [!TIP]
+> Let your AI agent do the hard parts. This package ships a [Laravel Boost](https://laravel.com/docs/boost) skill, `laravel-essentials-development`, that teaches your agent how to install, configure and use Laravel Essentials. Install Boost and select the skill when prompted:
+>
+> ```bash
+> composer require laravel/boost --dev
+> php artisan boost:install
+> ```
+>
+> Already using Boost? Run `php artisan boost:update --discover` to pick up the skill. Then just ask, for example: *"Install Laravel Essentials and turn on strict models and forced HTTPS in production."*
+
 ## Usage
 
 Once installed, Laravel Essentials applies a set of sensible defaults automatically — no code required:
