@@ -66,7 +66,7 @@ class Essentials
     {
         /** @var array<int, class-string<Configurable>|Configurable> $configurables */
         $configurables = array_merge(
-            (array) config('essentials.configurables', []),
+            $this->configuredConfigurables(),
             static::$configurables,
         );
 
@@ -75,5 +75,22 @@ class Essentials
                 ? $this->container->make($configurable)
                 : $configurable,
             );
+    }
+
+    /**
+     * The configurables from config('essentials.configurables'): a list, or a
+     * comma-separated string of classes, e.g. from the ESSENTIALS_CONFIGURABLES env variable.
+     *
+     * @return array<int, mixed>
+     */
+    protected function configuredConfigurables(): array
+    {
+        $configurables = config('essentials.configurables', []);
+
+        if (is_string($configurables)) {
+            return array_values(array_filter(array_map(trim(...), explode(',', $configurables))));
+        }
+
+        return array_values((array) $configurables);
     }
 }

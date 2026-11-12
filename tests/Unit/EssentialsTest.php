@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Foxws\Essentials\Configurables\FakeSleep;
+use Foxws\Essentials\Configurables\ImmutableDates;
 use Foxws\Essentials\Contracts\Configurable;
 use Foxws\Essentials\Essentials;
 
@@ -78,4 +80,11 @@ it('only runs configurables once per instance', function () {
     $essentials->configure();
 
     expect($spy->runs)->toBe(1);
+});
+
+it('reads configurables from a comma-separated string', function () {
+    config(['essentials.configurables' => ' Foxws\Essentials\Configurables\ImmutableDates, Foxws\Essentials\Configurables\FakeSleep ,']);
+
+    expect((new Essentials(app()))->configurables()->map(fn (Configurable $configurable): string => $configurable::class)->all())
+        ->toBe([ImmutableDates::class, FakeSleep::class]);
 });

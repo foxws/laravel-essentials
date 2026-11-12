@@ -13,8 +13,8 @@ php artisan vendor:publish --tag="essentials-config"
 
 | Key | Env | Default | Description |
 | --- | --- | --- | --- |
-| `configurables` | `ESSENTIALS_CONFIGURABLES` | see [Configurables](configurables.md#built-in-configurables) | The list of configurable classes to apply on boot. |
-| `morph_map` | `ESSENTIALS_MORPH_MAP` | `[]` | `alias => Model::class` pairs, enforced with `Relation::enforceMorphMap()`. |
+| `configurables` | `ESSENTIALS_CONFIGURABLES` | see [Configurables](configurables.md#built-in-configurables) | The list of configurable classes to apply on boot. The env variable takes a comma-separated list of classes. |
+| `morph_map` | — | `[]` | `alias => Model::class` pairs, enforced with `Relation::enforceMorphMap()`. |
 
 See [Configurables](configurables.md) for what each entry in `configurables` does.
 
