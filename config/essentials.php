@@ -25,7 +25,8 @@ return [
     | This array contains a list of configurable features that can be enabled
     | or disabled in your application.
     | Each feature is represented by a class that implements the Configurable interface.
-    | You can add or remove features from this array as needed.
+    | You can add or remove features from this array as needed, or set
+    | ESSENTIALS_CONFIGURABLES to a comma-separated list of classes.
     |
     */
 
@@ -54,9 +55,9 @@ return [
     |
     */
 
-    'morph_map' => env('ESSENTIALS_MORPH_MAP', [
+    'morph_map' => [
         // 'user' => Domain\Users\Models\User::class,
         // 'post' => Domain\Posts\Models\Post::class,
-    ]),
+    ],
 
 ];
