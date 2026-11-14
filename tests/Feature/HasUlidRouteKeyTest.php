@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Workbench\App\Models\Post;
@@ -59,3 +60,17 @@ it('finds a model in another column', function () {
         ->and(Post::findFromUlidOrFail($publicId, 'public_id')->is($post))->toBeTrue()
         ->and(Post::findFromUlidOr($post->ulid, fn () => 'missing', 'public_id'))->toBe('missing');
 });
+
+it('finds nothing for an invalid ulid without querying', function () {
+    Post::create(['title' => 'Hello']);
+
+    DB::enableQueryLog();
+
+    expect(Post::findFromUlid('not-a-ulid'))->toBeNull()
+        ->and(Post::findFromUlidOr('not-a-ulid', fn () => 'missing'))->toBe('missing')
+        ->and(DB::getQueryLog())->toBeEmpty();
+});
+
+it('throws for an invalid ulid', function () {
+    Post::findFromUlidOrFail('not-a-ulid');
+})->throws(ModelNotFoundException::class);

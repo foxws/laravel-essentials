@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
 
 /**
  * Keeps the auto-incrementing primary key, and fills a unique "ulid" column that routes
@@ -34,12 +35,17 @@ trait HasUlidRouteKey
 
     /**
      * Find a model by its ULID, or return the model as-is when given one. Looks in the
-     * route key column, unless another column is given.
+     * route key column, unless another column is given. A value that isn't a valid ULID
+     * finds nothing without querying, like route model binding.
      */
     public static function findFromUlid(self|string $value, ?string $column = null): ?static
     {
         if ($value instanceof static) {
             return $value;
+        }
+
+        if (! Str::isUlid($value)) {
+            return null;
         }
 
         $query = static::query();

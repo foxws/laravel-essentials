@@ -63,7 +63,7 @@ Invoice::findFromUlidOr($ulid, fn () => abort(404));
 Invoice::findFromUlidOrFail($ulid);
 ```
 
-They look in the route key column (`ulid`), so overriding `getRouteKeyName()` changes where they look too. Pass a column to look somewhere else:
+A value that isn't a valid ULID finds nothing without querying the database, like route model binding does. They look in the route key column (`ulid`), so overriding `getRouteKeyName()` changes where they look too. Pass a column to look somewhere else:
 
 ```php
 Invoice::findFromUlid($ulid, 'public_id');
