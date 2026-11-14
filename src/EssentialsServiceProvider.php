@@ -16,6 +16,10 @@ class EssentialsServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/essentials.php', 'essentials');
 
         $this->app->singleton(Essentials::class);
+
+        if (config('essentials.helpers', true)) {
+            require_once __DIR__.'/helpers.php';
+        }
     }
 
     /**

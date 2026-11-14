@@ -60,4 +60,36 @@ return [
         // 'post' => Domain\Posts\Models\Post::class,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    |
+    | Loads the markdown() and toast() helper functions. toast() is only
+    | defined when inertiajs/inertia-laravel is installed. Functions your
+    | app already defines are left alone.
+    |
+    */
+
+    'helpers' => (bool) env('ESSENTIALS_HELPERS', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Content Security Policy
+    |--------------------------------------------------------------------------
+    |
+    | Used by Foxws\Essentials\Csp\Middleware\AddCspHeaders (which requires
+    | spatie/laravel-csp). Requests to routes matching these names don't get
+    | the CSP headers, e.g. dashboards that ship their own inline scripts.
+    |
+    */
+
+    'csp' => [
+        'except' => [
+            'boost.*',
+            'horizon.*',
+            'telescope.*',
+        ],
+    ],
+
 ];

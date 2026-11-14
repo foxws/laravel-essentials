@@ -21,14 +21,20 @@
     "illuminate/support": "^13.0"
   },
   "require-dev": {
+    "inertiajs/inertia-laravel": "^3.7",
     "larastan/larastan": "^3.9",
-    "laravel/pint": "^1.29",
     "laravel/pao": "^1.0",
+    "laravel/pint": "^1.29",
     "orchestra/testbench": "^11.0",
     "pestphp/pest": "^5.0",
     "pestphp/pest-plugin-laravel": "^5.0",
     "pestphp/pest-plugin-type-coverage": "^5.0.2",
-    "phpstan/extension-installer": "^1.4"
+    "phpstan/extension-installer": "^1.4",
+    "spatie/laravel-csp": "^3.31"
+  },
+  "suggest": {
+    "spatie/laravel-csp": "Required to use the CSP presets, nonce generator and middleware (^3.31).",
+    "inertiajs/inertia-laravel": "Required to use the toast() helper (^3.7)."
   },
   "autoload": {
     "psr-4": {

@@ -124,3 +124,16 @@ Read before executing:
 - Do not call `Essentials::configure()` yourself — it already runs on `booted()` and is idempotent; calling it again is a no-op, not a way to force re-configuration.
 - Do not use this package for Domain Driven Design scaffolding (`ddd:install`, `ddd:make`) — that lives in the separate `foxws/laravel-ddd` package.
 - Do not document package internals here; keep the skill focused on adoption in Laravel apps.
+
+### Content Security Policy (optional, requires `spatie/laravel-csp`)
+
+- Presets: `Foxws\Essentials\Csp\Presets\BasicPreset` (strict same-origin policy plus `*.{app host}`, nonce + `strict-dynamic` scripts) and `IconifyPreset` (`connect-src api.iconify.design`)
+- Set `csp.nonce_generator` to `Foxws\Essentials\Csp\Nonce\ViteNonceGenerator` so the header and Vite's tags share one nonce
+- Append `Foxws\Essentials\Csp\Middleware\AddCspHeaders` to the web middleware; it skips routes in `essentials.csp.except` (`boost.*`, `horizon.*`, `telescope.*`)
+- `AddHorizonCspNonce` / `AddTelescopeCspNonce` give those dashboards the nonce when they keep the CSP
+
+### Helpers and casts
+
+- `essentials.helpers` (`ESSENTIALS_HELPERS`, default `true`) loads `markdown()` (safe `Str::markdown()`) and `toast($title, $description, $type = 'success')`, which flashes to the next Inertia response and only exists when `inertiajs/inertia-laravel` is installed
+- `Foxws\Essentials\Casts\AsDateTime` stores dates in `app.timezone` and reads blank values as `null`
+
