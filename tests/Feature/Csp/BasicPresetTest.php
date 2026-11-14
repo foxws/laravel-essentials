@@ -20,6 +20,24 @@ it('builds a strict policy scoped to the application host', function () {
         ->toContain("'strict-dynamic'");
 });
 
+it('upgrades insecure requests when the app runs on https', function () {
+    config(['app.url' => 'https://app.example.com']);
+
+    $policy = new Policy;
+    (new BasicPreset)->configure($policy);
+
+    expect($policy->getContents())->toContain('upgrade-insecure-requests');
+});
+
+it('leaves requests alone when the app runs on http', function () {
+    config(['app.url' => 'http://localhost:8000']);
+
+    $policy = new Policy;
+    (new BasicPreset)->configure($policy);
+
+    expect($policy->getContents())->not->toContain('upgrade-insecure-requests');
+});
+
 it('allows the iconify api', function () {
     $policy = new Policy;
     (new IconifyPreset)->configure($policy);

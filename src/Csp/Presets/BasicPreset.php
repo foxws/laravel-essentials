@@ -15,7 +15,9 @@ use Spatie\Csp\Value;
 
 /**
  * A strict policy for apps served with Vite: same-origin sources, the app's subdomains,
- * nonce-based scripts with strict-dynamic, and no framing or plugins.
+ * nonce-based scripts with strict-dynamic, and no framing or plugins. Requests are only
+ * upgraded to HTTPS when app.url is HTTPS: on plain HTTP, such as local development or
+ * browser tests, the upgrade would break same-origin redirects.
  */
 class BasicPreset implements Preset
 {
@@ -24,7 +26,6 @@ class BasicPreset implements Preset
         $host = $this->host();
 
         $policy
-            ->add(Directive::UPGRADE_INSECURE_REQUESTS, Value::NO_VALUE)
             ->add(Directive::BASE, Keyword::SELF)
             ->add(Directive::CONNECT, Keyword::SELF)
             ->add(Directive::CONNECT, Scheme::BLOB)
@@ -43,11 +44,20 @@ class BasicPreset implements Preset
             ->add(Directive::STYLE, Keyword::UNSAFE_INLINE)
             ->addNonce(Directive::SCRIPT);
 
+        if ($this->isSecure()) {
+            $policy->add(Directive::UPGRADE_INSECURE_REQUESTS, Value::NO_VALUE);
+        }
+
         if ($host !== null) {
             $policy
                 ->add(Directive::CONNECT, ["https://*.{$host}", "wss://*.{$host}"])
                 ->add([Directive::FRAME, Directive::FONT, Directive::STYLE, Directive::IMG], "*.{$host}");
         }
+    }
+
+    protected function isSecure(): bool
+    {
+        return Uri::of(Config::string('app.url', 'http://localhost'))->scheme() === 'https';
     }
 
     protected function host(): ?string
