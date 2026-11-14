@@ -63,6 +63,13 @@ Invoice::findFromUlidOr($ulid, fn () => abort(404));
 Invoice::findFromUlidOrFail($ulid);
 ```
 
+They look in the route key column (`ulid`), so overriding `getRouteKeyName()` changes where they look too. Pass a column to look somewhere else:
+
+```php
+Invoice::findFromUlid($ulid, 'public_id');
+Invoice::findFromUlidOrFail($ulid, 'public_id');
+```
+
 ## Enumerable
 
 `Foxws\Essentials\Contracts\Enumerable` is a backed enum with human-readable labels, e.g. to build select options:

@@ -33,15 +33,18 @@ trait HasUlidRouteKey
     }
 
     /**
-     * Find a model by its ULID, or return the model as-is when given one.
+     * Find a model by its ULID, or return the model as-is when given one. Looks in the
+     * route key column, unless another column is given.
      */
-    public static function findFromUlid(self|string $value): ?static
+    public static function findFromUlid(self|string $value, ?string $column = null): ?static
     {
         if ($value instanceof static) {
             return $value;
         }
 
-        return static::query()->firstWhere('ulid', $value);
+        $query = static::query();
+
+        return $query->firstWhere($column ?? $query->getModel()->getRouteKeyName(), $value);
     }
 
     /**
@@ -52,9 +55,9 @@ trait HasUlidRouteKey
      * @param  Closure(): TValue  $callback
      * @return static|TValue
      */
-    public static function findFromUlidOr(self|string $value, Closure $callback): mixed
+    public static function findFromUlidOr(self|string $value, Closure $callback, ?string $column = null): mixed
     {
-        return static::findFromUlid($value) ?? $callback();
+        return static::findFromUlid($value, $column) ?? $callback();
     }
 
     /**
@@ -62,9 +65,9 @@ trait HasUlidRouteKey
      *
      * @throws ModelNotFoundException<static>
      */
-    public static function findFromUlidOrFail(self|string $value): static
+    public static function findFromUlidOrFail(self|string $value, ?string $column = null): static
     {
-        return static::findFromUlid($value)
+        return static::findFromUlid($value, $column)
             ?? throw (new ModelNotFoundException)->setModel(static::class, [(string) $value]);
     }
 }

@@ -12,6 +12,7 @@ beforeEach(function () {
     Schema::create('posts', function (Blueprint $table) {
         $table->id();
         $table->ulid('ulid')->unique();
+        $table->ulid('public_id')->nullable()->unique();
         $table->string('title');
         $table->timestamps();
     });
@@ -48,3 +49,13 @@ it('throws when no model has the ulid', function () {
 
     Post::findFromUlidOrFail((string) Str::ulid());
 })->throws(ModelNotFoundException::class);
+
+it('finds a model in another column', function () {
+    $publicId = (string) Str::ulid();
+    $post = Post::create(['title' => 'Hello', 'public_id' => $publicId]);
+
+    expect(Post::findFromUlid($publicId))->toBeNull()
+        ->and(Post::findFromUlid($publicId, 'public_id')?->is($post))->toBeTrue()
+        ->and(Post::findFromUlidOrFail($publicId, 'public_id')->is($post))->toBeTrue()
+        ->and(Post::findFromUlidOr($post->ulid, fn () => 'missing', 'public_id'))->toBe('missing');
+});
