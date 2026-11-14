@@ -16,7 +16,7 @@ php artisan vendor:publish --tag="csp-config"
 
 | Class | What it does |
 | --- | --- |
-| `Csp\Presets\BasicPreset` | A strict policy: same-origin sources plus the subdomains of `app.url`, nonce-based scripts with `strict-dynamic`, no framing and no plugins |
+| `Csp\Presets\BasicPreset` | A strict policy: same-origin sources plus the subdomains of `app.url`, nonce-based scripts with `strict-dynamic`, no framing and no plugins. It adds `upgrade-insecure-requests` only when `app.url` is `https`, because on plain HTTP it breaks same-origin redirects |
 | `Csp\Presets\IconifyPreset` | Allows `connect-src api.iconify.design`, for `@iconify/vue` and Nuxt UI |
 | `Csp\Nonce\ViteNonceGenerator` | Uses `Vite::useCspNonce()`, so the header and the tags Vite renders share one nonce |
 
