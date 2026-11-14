@@ -6,6 +6,7 @@ namespace Foxws\Essentials\Tests;
 
 use Foxws\Essentials\EssentialsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\Csp\CspServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -13,6 +14,7 @@ abstract class TestCase extends Orchestra
     {
         return [
             EssentialsServiceProvider::class,
+            CspServiceProvider::class,
         ];
     }
 }

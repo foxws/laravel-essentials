@@ -51,6 +51,8 @@ php artisan vendor:publish --tag="essentials-config"
 ## Where to go next
 
 - [Configurables](configurables.md) — the built-in defaults, and how to write your own.
+- [Content Security Policy](csp.md) — presets, a Vite nonce generator and dashboard middleware for spatie/laravel-csp.
+- [Casts, concerns and contracts](casts.md) — the `AsDateTime` cast, `HasUlid` and `Enumerable`.
 - [Configuration Reference](configuration.md) — every option in `config/essentials.php`.
 
 Looking for Domain Driven Design scaffolding (`ddd:install`, `ddd:make`)? That moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package.
