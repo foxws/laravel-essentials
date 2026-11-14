@@ -10,7 +10,8 @@ use Laravel\Telescope\Telescope;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Gives the Telescope dashboard the request's CSP nonce. Add it to telescope.middleware.
+ * Gives the Telescope dashboard the request's CSP nonce, so its inline style and script tags
+ * pass the app's policy. Add it to telescope.middleware.
  */
 class AddTelescopeCspNonce
 {

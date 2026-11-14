@@ -51,7 +51,7 @@ php artisan vendor:publish --tag="essentials-config"
 ## Where to go next
 
 - [Configurables](configurables.md) — the built-in defaults, and how to write your own.
-- [Content Security Policy](csp.md) — presets, a Vite nonce generator and middleware for spatie/laravel-csp.
+- [Content Security Policy](csp.md) — presets, a Vite nonce generator and dashboard middleware for spatie/laravel-csp.
 - [Helpers, casts, concerns and contracts](helpers.md) — `markdown()`, the `AsDateTime` cast, `HasUlidRouteKey` and `Enumerable`.
 - [Configuration Reference](configuration.md) — every option in `config/essentials.php`.
 

@@ -129,8 +129,8 @@ Read before executing:
 
 - Presets: `Foxws\Essentials\Csp\Presets\BasicPreset` (strict same-origin policy plus `*.{app host}`, nonce + `strict-dynamic` scripts) and `IconifyPreset` (`connect-src api.iconify.design`)
 - Set `csp.nonce_generator` to `Foxws\Essentials\Csp\Nonce\ViteNonceGenerator` so the header and Vite's tags share one nonce
-- Append `Foxws\Essentials\Csp\Middleware\AddCspHeaders` to the web middleware; it skips routes in `essentials.csp.except` (`boost.*`, `horizon.*`, `telescope.*`)
-- `AddHorizonCspNonce` / `AddTelescopeCspNonce` give those dashboards the nonce when they keep the CSP
+- Append Spatie's `Spatie\Csp\AddCspHeaders` to the web middleware; Horizon and Telescope run inside the app and keep its policy
+- Add `Foxws\Essentials\Csp\Middleware\AddHorizonCspNonce` to `horizon.middleware` and `AddTelescopeCspNonce` to `telescope.middleware`, so their inline style and script tags get the nonce; keep `Spatie\Csp\Presets\BunnyFonts` for their font
 
 ### Helpers, casts, concerns and contracts
 

@@ -30,17 +30,31 @@ php artisan vendor:publish --tag="csp-config"
 'nonce_generator' => Foxws\Essentials\Csp\Nonce\ViteNonceGenerator::class,
 ```
 
-## Middleware
-
-Use `Csp\Middleware\AddCspHeaders` instead of Spatie's middleware. It skips the routes named in `essentials.csp.except` (`boost.*`, `horizon.*` and `telescope.*` by default), whose dashboards ship their own inline scripts:
+Then add Spatie's middleware to the web group:
 
 ```php
 // bootstrap/app.php
 ->withMiddleware(function (Middleware $middleware): void {
     $middleware->web(append: [
-        Foxws\Essentials\Csp\Middleware\AddCspHeaders::class,
+        Spatie\Csp\AddCspHeaders::class,
     ]);
 })
 ```
 
-To keep the CSP on Horizon or Telescope instead, remove them from `except` and give the dashboard the nonce: add `Csp\Middleware\AddHorizonCspNonce` to `horizon.middleware`, or `Csp\Middleware\AddTelescopeCspNonce` to `telescope.middleware`.
+## Horizon and Telescope
+
+Horizon and Telescope run inside your app, so they get the same policy as every other page. Their dashboards render an inline `<style>` and `<script type="module">`, which only pass the policy with the request's nonce. Add the matching middleware to the dashboard's middleware:
+
+```php
+// config/horizon.php
+'middleware' => ['web', Foxws\Essentials\Csp\Middleware\AddHorizonCspNonce::class],
+
+// config/telescope.php
+'middleware' => [
+    'web',
+    Foxws\Essentials\Csp\Middleware\AddTelescopeCspNonce::class,
+    Laravel\Telescope\Http\Middleware\Authorize::class,
+],
+```
+
+Both dashboards load their font from fonts.bunny.net, so keep `Spatie\Csp\Presets\BunnyFonts` in `csp.presets`. Boost's browser logger already reads the nonce from Vite, so it needs nothing extra.

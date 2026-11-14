@@ -10,7 +10,8 @@ use Laravel\Horizon\Horizon;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Gives the Horizon dashboard the request's CSP nonce. Add it to horizon.middleware.
+ * Gives the Horizon dashboard the request's CSP nonce, so its inline style and script tags
+ * pass the app's policy. Add it to horizon.middleware.
  */
 class AddHorizonCspNonce
 {
