@@ -1,10 +1,21 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/1.1.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/1.1.1...HEAD)
 
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
+
+## [1.1.1](https://github.com/foxws/laravel-essentials/compare/1.1.0...1.1.1) - 2026-11-14
+
+<!-- Release notes generated using configuration in .github/release.yml at 0cc9ba2580363826f0938349c854a73cf7bdc390 -->
+### What's Changed
+
+#### Other Changes
+
+* Only upgrade insecure requests when the app runs on HTTPS by @francoism90 in https://github.com/foxws/laravel-essentials/pull/13
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/1.1.0...1.1.1
 
 ## [1.1.0](https://github.com/foxws/laravel-essentials/compare/1.0.0...1.1.0) - 2026-11-14
 
