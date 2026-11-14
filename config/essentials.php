@@ -60,16 +60,4 @@ return [
         // 'post' => Domain\Posts\Models\Post::class,
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Helpers
-    |--------------------------------------------------------------------------
-    |
-    | Loads the markdown() helper function. A function your app already
-    | defines is left alone.
-    |
-    */
-
-    'helpers' => (bool) env('ESSENTIALS_HELPERS', true),
-
 ];

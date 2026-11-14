@@ -3,15 +3,7 @@ section: Usage
 order: 3
 ---
 
-# Helpers, casts, concerns and contracts
-
-## Helpers
-
-With `essentials.helpers` on (the default, or `ESSENTIALS_HELPERS=false` to turn it off), this function is loaded. If your app already defines it, yours is used.
-
-| Function | What it does |
-| --- | --- |
-| `markdown(?string $value): string` | Renders Markdown with `Str::markdown()`, stripping raw HTML and unsafe links. Blank values give `''`. |
+# Casts, concerns and contracts
 
 ## AsDateTime
 

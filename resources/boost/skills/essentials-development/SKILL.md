@@ -132,9 +132,8 @@ Read before executing:
 - Append Spatie's `Spatie\Csp\AddCspHeaders` to the web middleware; Horizon and Telescope run inside the app and keep its policy
 - Add `Foxws\Essentials\Csp\Middleware\AddHorizonCspNonce` to `horizon.middleware` and `AddTelescopeCspNonce` to `telescope.middleware`, so their inline style and script tags get the nonce; keep `Spatie\Csp\Presets\BunnyFonts` for their font
 
-### Helpers, casts, concerns and contracts
+### Casts, concerns and contracts
 
-- `essentials.helpers` (`ESSENTIALS_HELPERS`, default `true`) loads `markdown()`, a `Str::markdown()` that strips raw HTML and unsafe links
 - `Foxws\Essentials\Casts\AsDateTime` stores dates in `app.timezone` (Laravel's `datetime` casts drop the offset instead) and reads blank values as `null`
 - `Foxws\Essentials\Concerns\HasUlidRouteKey` keeps the incrementing id and fills a unique `ulid` column that routes bind to; add `$table->ulid('ulid')->unique()` to the migration. `Model::findFromUlid($ulid)` looks a model up by it; `findFromUlidOr($ulid, $callback)` and `findFromUlidOrFail($ulid)` mirror Eloquent's `findOr()` and `findOrFail()`. All three look in the route key column, or the column passed as the last argument. Inside a query or relation, use the `whereUlid($ulidOrList, $column = null)` scope, e.g. `$user->posts()->whereUlid($ulid)->firstOrFail()`
 - `Foxws\Essentials\Contracts\Enumerable`: a backed enum with `label()` and `static labels()` (labels keyed by value), for select options
