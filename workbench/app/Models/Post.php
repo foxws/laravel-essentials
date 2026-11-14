@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Workbench\App\Models;
 
-use Foxws\Essentials\Concerns\HasUlidRouteKey;
+use Foxws\Essentials\Concerns\HasUlid;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Model;
 
+#[RouteKey('ulid')]
 class Post extends Model
 {
-    use HasUlidRouteKey;
+    use HasUlid;
 
     /**
      * @var list<string>

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Workbench\App\Models\Post;
@@ -19,12 +21,11 @@ beforeEach(function () {
     });
 });
 
-it('keeps the incrementing key and fills the ulid column', function () {
+it('keeps the incrementing key and fills the ulid column, which #[RouteKey] exposes', function () {
     $post = Post::create(['title' => 'Hello']);
 
     expect($post->getKey())->toBe(1)
         ->and(Str::isUlid($post->ulid))->toBeTrue()
-        ->and($post->getRouteKeyName())->toBe('ulid')
         ->and($post->getRouteKey())->toBe($post->ulid);
 });
 
@@ -93,4 +94,13 @@ it('constrains a query on another column', function () {
 
     expect(Post::whereUlid($publicId)->exists())->toBeFalse()
         ->and(Post::whereUlid($publicId, 'public_id')->firstOrFail()->is($post))->toBeTrue();
+});
+
+it('binds routes to the ulid with #[RouteKey]', function () {
+    $post = Post::create(['title' => 'Hello']);
+
+    Route::middleware(SubstituteBindings::class)->get('/posts/{post}', fn (Post $post) => $post->title);
+
+    $this->get("/posts/{$post->ulid}")->assertOk()->assertSee('Hello');
+    $this->get("/posts/{$post->id}")->assertNotFound();
 });

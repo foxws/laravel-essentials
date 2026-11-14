@@ -27,16 +27,20 @@ protected function casts(): array
 }
 ```
 
-## HasUlidRouteKey
+## HasUlid
 
-`Foxws\Essentials\Concerns\HasUlidRouteKey` keeps a model's auto-incrementing primary key, and fills a unique `ulid` column that route model binding uses, so ids aren't exposed in URLs.
+`Foxws\Essentials\Concerns\HasUlid` keeps a model's auto-incrementing primary key, and fills a unique `ulid` column to expose instead of the id. Unlike Laravel's `HasUlids`, the primary key stays an integer.
+
+Add Laravel's `#[RouteKey]` attribute to make routes bind to the ULID, so ids aren't exposed in URLs:
 
 ```php
-use Foxws\Essentials\Concerns\HasUlidRouteKey;
+use Foxws\Essentials\Concerns\HasUlid;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 
+#[RouteKey('ulid')]
 class Invoice extends Model
 {
-    use HasUlidRouteKey;
+    use HasUlid;
 }
 ```
 
@@ -55,7 +59,7 @@ Invoice::findFromUlidOr($ulid, fn () => abort(404));
 Invoice::findFromUlidOrFail($ulid);
 ```
 
-A value that isn't a valid ULID finds nothing without querying the database, like route model binding does. They look in the route key column (`ulid`), so overriding `getRouteKeyName()` changes where they look too. Pass a column to look somewhere else:
+A value that isn't a valid ULID finds nothing without querying the database, like route model binding does. They look in the `ulid` column; pass a column to look somewhere else:
 
 ```php
 Invoice::findFromUlid($ulid, 'public_id');

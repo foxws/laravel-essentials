@@ -13,12 +13,12 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
 /**
- * Keeps the auto-incrementing primary key, and fills a unique "ulid" column that routes
- * bind to, so ids aren't exposed in URLs.
+ * Keeps the auto-incrementing primary key, and fills a unique "ulid" column to expose instead
+ * of the id, e.g. with #[RouteKey('ulid')] on the model so routes bind to it.
  *
  * @mixin Model
  */
-trait HasUlidRouteKey
+trait HasUlid
 {
     use HasUlids;
 
@@ -30,14 +30,9 @@ trait HasUlidRouteKey
         return ['ulid'];
     }
 
-    public function getRouteKeyName(): string
-    {
-        return 'ulid';
-    }
-
     /**
      * Find a model by its ULID, or return the model as-is when given one. Looks in the
-     * route key column, unless another column is given. A value that isn't a valid ULID
+     * "ulid" column, unless another column is given. A value that isn't a valid ULID
      * finds nothing without querying, like route model binding.
      */
     public static function findFromUlid(self|string $value, ?string $column = null): ?static
@@ -79,7 +74,7 @@ trait HasUlidRouteKey
 
     /**
      * Constrain the query to the given ULIDs, e.g. $user->posts()->whereUlid($ulid)->firstOrFail().
-     * Looks in the route key column, unless another column is given. Values that aren't
+     * Looks in the "ulid" column, unless another column is given. Values that aren't
      * valid ULIDs are left out, so they match nothing.
      *
      * @param  Builder<static>  $query
@@ -90,6 +85,6 @@ trait HasUlidRouteKey
     {
         $ulids = array_values(array_filter((array) $ulids, Str::isUlid(...)));
 
-        $query->whereIn($query->qualifyColumn($column ?? $this->getRouteKeyName()), $ulids);
+        $query->whereIn($query->qualifyColumn($column ?? $this->uniqueIds()[0]), $ulids);
     }
 }
