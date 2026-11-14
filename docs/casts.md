@@ -78,28 +78,27 @@ Values that aren't valid ULIDs are left out, so they match nothing.
 
 ## Enumerable
 
-`Foxws\Essentials\Contracts\Enumerable` is a backed enum with human-readable labels, e.g. to build select options:
+`Foxws\Essentials\Contracts\Enumerable` is a backed enum with human-readable labels, e.g. to build select options. Write `label()` with an exhaustive `match`, and use the `HasLabels` trait, which builds `labels()` from it:
 
 ```php
+use Foxws\Essentials\Concerns\HasLabels;
 use Foxws\Essentials\Contracts\Enumerable;
 
 enum InvoiceStatus: string implements Enumerable
 {
+    use HasLabels;
+
     case Draft = 'draft';
     case Paid = 'paid';
 
     public function label(): string
     {
-        return self::labels()[$this->value];
-    }
-
-    public static function labels(): array
-    {
-        return [
-            'draft' => __('Draft'),
-            'paid' => __('Paid'),
-        ];
+        return match ($this) {
+            self::Draft => __('Draft'),
+            self::Paid => __('Paid'),
+        };
     }
 }
 ```
 
+PHPStan reports a `match` that misses a case, and PHP throws an `UnhandledMatchError` if one slips through, so a new case can't silently go without a label. `InvoiceStatus::labels()` gives `['draft' => 'Draft', 'paid' => 'Paid']`, which is what [spatie/laravel-options](https://github.com/spatie/laravel-options) reads in `Options::forEnum()`.

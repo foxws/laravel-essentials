@@ -7,7 +7,8 @@ namespace Foxws\Essentials\Contracts;
 use BackedEnum;
 
 /**
- * A backed enum with human-readable labels, e.g. for select options.
+ * A backed enum with human-readable labels, e.g. for select options. Implement label() with a
+ * match on $this, and use the HasLabels trait for labels().
  */
 interface Enumerable extends BackedEnum
 {

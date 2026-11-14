@@ -2,29 +2,16 @@
 
 declare(strict_types=1);
 
-use Foxws\Essentials\Contracts\Enumerable;
+use Workbench\App\Enums\PostStatus;
 
-enum Status: string implements Enumerable
-{
-    case Draft = 'draft';
-    case Published = 'published';
+it('labels a case', function () {
+    expect(PostStatus::Published)->toBeInstanceOf(BackedEnum::class)
+        ->and(PostStatus::Published->label())->toBe('Published');
+});
 
-    public function label(): string
-    {
-        return self::labels()[$this->value];
-    }
-
-    public static function labels(): array
-    {
-        return [
-            'draft' => 'Draft',
-            'published' => 'Published',
-        ];
-    }
-}
-
-it('is a backed enum with labels', function () {
-    expect(Status::Published)->toBeInstanceOf(BackedEnum::class)
-        ->and(Status::Published->label())->toBe('Published')
-        ->and(Status::labels())->toHaveCount(count(Status::cases()));
+it('builds the labels of every case, keyed by value', function () {
+    expect(PostStatus::labels())->toBe([
+        'draft' => 'Draft',
+        'published' => 'Published',
+    ]);
 });
