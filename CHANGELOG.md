@@ -1,10 +1,26 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/1.0.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/1.1.0...HEAD)
 
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
+
+## [1.1.0](https://github.com/foxws/laravel-essentials/compare/1.0.0...1.1.0) - 2026-11-14
+
+<!-- Release notes generated using configuration in .github/release.yml at b5da6a116ae685f7fe92738ee0c9c0c884031806 -->
+### What's Changed
+
+#### Other Changes
+
+* Bump shivammathur/setup-php from 2.37.2 to 2.40.0 by @dependabot[bot] in https://github.com/foxws/laravel-essentials/pull/9
+* Add CSP presets and nonce middleware, AsDateTime, HasUlid, Enumerable and HasLabels by @francoism90 in https://github.com/foxws/laravel-essentials/pull/12
+
+### New Contributors
+
+* @dependabot[bot] made their first contribution in https://github.com/foxws/laravel-essentials/pull/9
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/1.0.0...1.1.0
 
 ## [1.0.0](https://github.com/foxws/laravel-essentials/compare/0.0.5...1.0.0) - 2026-11-12
 
