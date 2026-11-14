@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Date;
  * Stores dates as a date-time string in the app timezone, whatever timezone they were given in,
  * and reads blank values as null. Dates come from the Date factory, so ImmutableDates applies.
  *
+ * Laravel's own datetime casts keep the clock time and drop the offset: "12:00+00:00" is stored
+ * as "12:00", which reads back as 12:00 in the app timezone. This cast stores "13:00" in
+ * Europe/Amsterdam instead.
+ *
  * @implements CastsAttributes<CarbonInterface|null, mixed>
  */
 class AsDateTime implements CastsAttributes

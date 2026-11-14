@@ -132,8 +132,9 @@ Read before executing:
 - Append `Foxws\Essentials\Csp\Middleware\AddCspHeaders` to the web middleware; it skips routes in `essentials.csp.except` (`boost.*`, `horizon.*`, `telescope.*`)
 - `AddHorizonCspNonce` / `AddTelescopeCspNonce` give those dashboards the nonce when they keep the CSP
 
-### Helpers and casts
+### Helpers, casts, concerns and contracts
 
-- `essentials.helpers` (`ESSENTIALS_HELPERS`, default `true`) loads `markdown()` (safe `Str::markdown()`) and `toast($title, $description, $type = 'success')`, which flashes to the next Inertia response and only exists when `inertiajs/inertia-laravel` is installed
-- `Foxws\Essentials\Casts\AsDateTime` stores dates in `app.timezone` and reads blank values as `null`
-
+- `essentials.helpers` (`ESSENTIALS_HELPERS`, default `true`) loads `markdown()`, a `Str::markdown()` that strips raw HTML and unsafe links
+- `Foxws\Essentials\Casts\AsDateTime` stores dates in `app.timezone` (Laravel's `datetime` casts drop the offset instead) and reads blank values as `null`
+- `Foxws\Essentials\Concerns\HasUlidRouteKey` keeps the incrementing id and fills a unique `ulid` column that routes bind to; add `$table->ulid('ulid')->unique()` to the migration. `Model::findFromUlid($ulid)` looks a model up by it
+- `Foxws\Essentials\Contracts\Enumerable`: a backed enum with `label()` and `static labels()` (labels keyed by value), for select options

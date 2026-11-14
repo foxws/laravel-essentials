@@ -65,9 +65,8 @@ return [
     | Helpers
     |--------------------------------------------------------------------------
     |
-    | Loads the markdown() and toast() helper functions. toast() is only
-    | defined when inertiajs/inertia-laravel is installed. Functions your
-    | app already defines are left alone.
+    | Loads the markdown() helper function. A function your app already
+    | defines is left alone.
     |
     */
 
