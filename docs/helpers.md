@@ -56,7 +56,12 @@ Schema::create('invoices', function (Blueprint $table) {
 });
 ```
 
-`Invoice::findFromUlid($ulid)` finds a model by its ULID, and returns the model as-is when you pass one.
+`Invoice::findFromUlid($ulid)` finds a model by its ULID, and returns the model as-is when you pass one. Like Eloquent's `findOr()` and `findOrFail()`, there's a version that calls a callback and one that throws a `ModelNotFoundException` when no model has the ULID:
+
+```php
+Invoice::findFromUlidOr($ulid, fn () => abort(404));
+Invoice::findFromUlidOrFail($ulid);
+```
 
 ## Enumerable
 
