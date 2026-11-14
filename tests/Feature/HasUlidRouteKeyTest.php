@@ -74,3 +74,23 @@ it('finds nothing for an invalid ulid without querying', function () {
 it('throws for an invalid ulid', function () {
     Post::findFromUlidOrFail('not-a-ulid');
 })->throws(ModelNotFoundException::class);
+
+it('constrains a query to the given ulids', function () {
+    $first = Post::create(['title' => 'First']);
+    $second = Post::create(['title' => 'Second']);
+    Post::create(['title' => 'Third']);
+
+    expect(Post::whereUlid($first->ulid)->sole()->is($first))->toBeTrue()
+        ->and(Post::where('title', 'Second')->whereUlid($first->ulid)->first())->toBeNull()
+        ->and(Post::whereUlid([$first->ulid, $second->ulid, 'not-a-ulid'])->pluck('title')->sort()->values()->all())
+        ->toBe(['First', 'Second'])
+        ->and(Post::whereUlid('not-a-ulid')->exists())->toBeFalse();
+});
+
+it('constrains a query on another column', function () {
+    $publicId = (string) Str::ulid();
+    $post = Post::create(['title' => 'Hello', 'public_id' => $publicId]);
+
+    expect(Post::whereUlid($publicId)->exists())->toBeFalse()
+        ->and(Post::whereUlid($publicId, 'public_id')->firstOrFail()->is($post))->toBeTrue();
+});

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Foxws\Essentials\Concerns;
 
 use Closure;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -48,9 +50,7 @@ trait HasUlidRouteKey
             return null;
         }
 
-        $query = static::query();
-
-        return $query->firstWhere($column ?? $query->getModel()->getRouteKeyName(), $value);
+        return static::query()->whereUlid($value, $column)->first();
     }
 
     /**
@@ -75,5 +75,21 @@ trait HasUlidRouteKey
     {
         return static::findFromUlid($value, $column)
             ?? throw (new ModelNotFoundException)->setModel(static::class, [(string) $value]);
+    }
+
+    /**
+     * Constrain the query to the given ULIDs, e.g. $user->posts()->whereUlid($ulid)->firstOrFail().
+     * Looks in the route key column, unless another column is given. Values that aren't
+     * valid ULIDs are left out, so they match nothing.
+     *
+     * @param  Builder<static>  $query
+     * @param  string|array<int, string>  $ulids
+     */
+    #[Scope]
+    protected function whereUlid(Builder $query, string|array $ulids, ?string $column = null): void
+    {
+        $ulids = array_values(array_filter((array) $ulids, Str::isUlid(...)));
+
+        $query->whereIn($query->qualifyColumn($column ?? $this->getRouteKeyName()), $ulids);
     }
 }

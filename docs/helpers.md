@@ -70,6 +70,16 @@ Invoice::findFromUlid($ulid, 'public_id');
 Invoice::findFromUlidOrFail($ulid, 'public_id');
 ```
 
+To look a ULID up inside a query, such as a relation or with other constraints, use the `whereUlid()` scope. It takes one ULID or a list, and the same optional column. The builder's `first()`, `firstOr()` and `firstOrFail()` work on it as usual:
+
+```php
+$customer->invoices()->whereUlid($ulid)->firstOrFail();
+Invoice::paid()->whereUlid($ulid)->first();
+Invoice::whereUlid([$first, $second])->get();
+```
+
+Values that aren't valid ULIDs are left out, so they match nothing.
+
 ## Enumerable
 
 `Foxws\Essentials\Contracts\Enumerable` is a backed enum with human-readable labels, e.g. to build select options:
