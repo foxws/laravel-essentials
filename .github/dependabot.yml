@@ -16,9 +16,3 @@ updates:
       interval: "weekly"
     labels:
       - "dependencies"
-    ignore:
-      # pestphp/pest-plugin-type-coverage calls AnalyserResult::getCollectedData(),
-      # which PHPStan 2.3.6 removed. Remove this, and the "<2.3.6" constraint in
-      # composer.json, once pestphp/pest-plugin-type-coverage#75 is released.
-      - dependency-name: "phpstan/phpstan"
-        versions: [">=2.3.6"]
