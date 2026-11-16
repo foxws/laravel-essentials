@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/foxws/laravel-essentials/compare/1.1.1...HEAD)
 
+### Added
+
+- `Octane\CaddySites`, which renders Caddyfile site blocks for FrankenPHP's `CADDY_EXTRA_CONFIG`, so the app's Caddy reverse proxies the services next to it. It replaces `PodmanCaddySites` from foxws/laravel-podman. See [Octane and Caddy](docs/octane.md).
+
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.

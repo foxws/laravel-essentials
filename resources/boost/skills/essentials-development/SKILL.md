@@ -132,6 +132,12 @@ Read before executing:
 - Append Spatie's `Spatie\Csp\AddCspHeaders` to the web middleware; Horizon and Telescope run inside the app and keep its policy
 - Add `Foxws\Essentials\Csp\Middleware\AddHorizonCspNonce` to `horizon.middleware` and `AddTelescopeCspNonce` to `telescope.middleware`, so their inline style and script tags get the nonce; keep `Spatie\Csp\Presets\BunnyFonts` for their font
 
+### Octane and Caddy
+
+- `Foxws\Essentials\Octane\CaddySites::render([hostname => 'host:port', ...], $octanePort)` renders Caddyfile site blocks for FrankenPHP's `CADDY_EXTRA_CONFIG` in `config/octane.php`, so the app's Caddy reverse proxies services such as S3, Reverb and Vite by hostname
+- Build the map with `hostFromUrl()`, `hostPortFromUrl()` and `hostPort()`; entries with an empty hostname or upstream are skipped, and every block is pinned to `http://` because a non-root FrankenPHP can't bind 443
+- Read the values with `env()` in that config file, not `config()`
+
 ### Casts, concerns and contracts
 
 - `Foxws\Essentials\Casts\AsDateTime` stores dates in `app.timezone` (Laravel's `datetime` casts drop the offset instead) and reads blank values as `null`
