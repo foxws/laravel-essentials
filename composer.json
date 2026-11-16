@@ -30,7 +30,6 @@
     "pestphp/pest-plugin-laravel": "^5.0",
     "pestphp/pest-plugin-type-coverage": "^5.0.2",
     "phpstan/extension-installer": "^1.4",
-    "phpstan/phpstan": "<2.3.6",
     "spatie/laravel-csp": "^3.31"
   },
   "suggest": {
