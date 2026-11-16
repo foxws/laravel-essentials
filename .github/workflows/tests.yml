@@ -57,8 +57,12 @@ jobs:
       - name: Linter
         run: composer lint:check
 
+      # pestphp/pest-plugin-type-coverage calls AnalyserResult::getCollectedData(),
+      # which PHPStan 2.3.6 removed, so this step crashes. Remove continue-on-error
+      # once pestphp/pest-plugin-type-coverage#75 is released.
       - name: Type Coverage
         if: runner.os != 'Windows'
+        continue-on-error: true
         run: composer test:types
 
       - name: Test Suite
