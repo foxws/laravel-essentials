@@ -1,10 +1,21 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/1.1.1...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/1.2.0...HEAD)
 
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
+
+## [1.2.0](https://github.com/foxws/laravel-essentials/compare/1.1.1...1.2.0) - 2026-11-17
+
+<!-- Release notes generated using configuration in .github/release.yml at 25a6c6ba79bd21079ea035ccd781b52431b5eaf0 -->
+### What's Changed
+
+#### Other Changes
+
+* Add a ReverbPreset that lets Echo connect to Reverb by @francoism90 in https://github.com/foxws/laravel-essentials/pull/15
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/1.1.1...1.2.0
 
 ## [1.1.1](https://github.com/foxws/laravel-essentials/compare/1.1.0...1.1.1) - 2026-11-14
 
