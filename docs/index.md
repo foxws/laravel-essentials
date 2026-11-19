@@ -5,7 +5,7 @@ metadata:
   group: foundations
   eyebrow: "Opinionated Defaults · Boot-time Config"
   desc: "Sensible Laravel defaults, applied automatically on boot."
-  requires: "PHP ^8.4"
+  requires: "PHP ^8.5"
   laravel: "13.x"
   licence: MIT
 ---
