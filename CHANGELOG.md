@@ -1,10 +1,24 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/1.2.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/2.0.0...HEAD)
 
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
+
+## [2.0.0](https://github.com/foxws/laravel-essentials/compare/1.2.0...2.0.0) - 2026-11-19
+
+This release requires PHP 8.5 or newer. PHP 8.4 is no longer supported, and PHP 8.6 is now tested in CI. Stay on the previous version if you still run PHP 8.4.
+
+<!-- Release notes generated using configuration in .github/release.yml at fdc25f688254fd3230c6a575602ffe3328bfb90f -->
+### What's Changed
+
+#### Other Changes
+
+* Add a missing comma to the CSP presets in the Boost skill by @francoism90 in https://github.com/foxws/laravel-essentials/pull/16
+* Drop PHP 8.4 and add PHP 8.6 by @francoism90 in https://github.com/foxws/laravel-essentials/pull/17
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/1.2.0...2.0.0
 
 ## [1.2.0](https://github.com/foxws/laravel-essentials/compare/1.1.1...1.2.0) - 2026-11-17
 
