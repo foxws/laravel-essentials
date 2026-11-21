@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Foxws\Essentials\Csp\Presets\BasicPreset;
+use Foxws\Essentials\Csp\Presets\GitHubImagesPreset;
 use Foxws\Essentials\Csp\Presets\IconifyPreset;
 use Foxws\Essentials\Csp\Presets\ReverbPreset;
 use Spatie\Csp\Policy;
@@ -44,6 +45,13 @@ it('allows the iconify api', function () {
     (new IconifyPreset)->configure($policy);
 
     expect($policy->getContents())->toContain('connect-src api.iconify.design');
+});
+
+it('allows images from raw.githubusercontent.com', function () {
+    $policy = new Policy;
+    (new GitHubImagesPreset)->configure($policy);
+
+    expect($policy->getContents())->toBe('img-src https://raw.githubusercontent.com');
 });
 
 it('allows websocket connections to reverb', function (string $scheme, int|string $port, string $origin) {
