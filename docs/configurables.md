@@ -33,6 +33,7 @@ After your app boots, `Foxws\Essentials\Essentials::configure()` looks at every 
 | `EnforceMorphMap`                     | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)`                                                                   |
 | `FakeSleep`                           | Running unit tests                  | `Sleep::fake()`                                                                                    |
 | `ForceHttpsScheme`                    | Always                              | `URL::forceHttps()`                                                                                |
+| `ForceRootUrl`                        | Opt-in, outside `local`             | `URL::useOrigin()` with `app.url`                                                                  |
 | `ForceSecurePassword`                 | Running in production               | `Password::defaults()` with a 12–64 char, mixed-case, numbers, symbols, and "uncompromised" policy |
 | `ImmutableDates`                      | Always                              | `Date::use(CarbonImmutable::class)`                                                                |
 | `ModelShouldBeStrict`                 | Always                              | `Model::shouldBeStrict()`                                                                          |
@@ -55,6 +56,27 @@ php artisan vendor:publish --tag="essentials-config"
     // ...
 ],
 ```
+
+## Forcing the root URL
+
+`ForceHttpsScheme` only sets the scheme: the host and port of a generated link still come from the request. When such a link ends up in a response cache, or in a mail sent during a request, whoever made that request chose where it points.
+
+`ForceRootUrl` takes them from `app.url` instead. It's opt-in, because every environment other than `local` then needs the right `APP_URL`, previews included. Turn it on in the published config:
+
+```php
+// config/essentials.php
+'configurables' => [
+    Foxws\Essentials\Configurables\ForceHttpsScheme::class,
+    Foxws\Essentials\Configurables\ForceRootUrl::class,
+    // ...
+],
+```
+
+Before you turn it on:
+
+- Keep `ForceHttpsScheme` next to it. Without it, the scheme still comes from the request.
+- An app that answers on several hosts links and redirects to `app.url` on all of them, and absolute signed URLs only validate on that host.
+- It only changes the URL generator's root. `request()->url()`, `url()->full()` and pagination links still follow the request, and so does the port of a route with its own domain.
 
 ## Writing your own configurable
 
