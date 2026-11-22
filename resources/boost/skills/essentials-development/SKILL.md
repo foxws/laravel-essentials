@@ -48,7 +48,7 @@ If an app's existing behavior conflicts with one of the "Always" defaults (e.g. 
 
 `ForceRootUrl` sends every generated link and redirect to `app.url`, as `ForceHttpsScheme` alone leaves the host and port to the request. Check `APP_URL` in every non-local environment, remove it for an app that serves several hosts, and add it to configs that were published before it existed, as those replace the default list. It doesn't cover `request()->url()`, `url()->full()`, pagination links, or the port of domain routes.
 
-For proxies that differ per environment, set `TRUSTED_PROXIES` rather than calling `env()` or `config()` in `withMiddleware()`, which runs before either is loaded. It replaces `trustProxies(at: ...)`. Keep `trustProxies(headers: ...)` in `bootstrap/app.php`, without `X-Forwarded-Host` unless the proxy overwrites it. A config published earlier needs `SetTrustedProxies::class` added.
+For proxies that differ per environment, set `TRUSTED_PROXIES` rather than calling `env()` or `config()` in `withMiddleware()`, which runs before either is loaded. Use `auto` as the app's default (`env('TRUSTED_PROXIES', 'auto')`): it's `*` on Laravel Cloud and `private_ranges` elsewhere, detected on boot, so don't call `laravel_cloud()` in the config. It replaces `trustProxies(at: ...)`. Keep `trustProxies(headers: ...)` in `bootstrap/app.php`, without `X-Forwarded-Host` unless the proxy overwrites it. A config published earlier needs `SetTrustedProxies::class` added.
 
 ### 3. Enable, disable, or reorder configurables
 

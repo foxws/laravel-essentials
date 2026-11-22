@@ -21,7 +21,18 @@ final readonly class SetTrustedProxies implements Configurable
 
     public function configure(): void
     {
-        TrustProxies::at($this->getProxies() ?? []);
+        $proxies = $this->getProxies() ?? [];
+
+        TrustProxies::at($proxies === 'auto' ? $this->detectProxies() : $proxies);
+    }
+
+    /**
+     * Detected on boot rather than in the config, which may be cached where the app is built instead of where it runs.
+     * Laravel Cloud's load balancers have no fixed address, so there it's any.
+     */
+    private function detectProxies(): string
+    {
+        return laravel_cloud() ? '*' : 'private_ranges';
     }
 
     /**

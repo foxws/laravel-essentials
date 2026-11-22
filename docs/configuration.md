@@ -14,7 +14,7 @@ php artisan vendor:publish --tag="essentials-config"
 | Key | Env | Default | Description |
 | --- | --- | --- | --- |
 | `configurables` | `ESSENTIALS_CONFIGURABLES` | see [Configurables](configurables.md#built-in-configurables) | The list of configurable classes to apply on boot. The env variable takes a comma-separated list of classes. |
-| `trusted_proxies` | `TRUSTED_PROXIES` | `null` | The proxies to trust, set with `TrustProxies::at()`. See [Trusting proxies](configurables.md#trusting-proxies-from-the-environment). |
+| `trusted_proxies` | `TRUSTED_PROXIES` | `null` | The proxies to trust, set with `TrustProxies::at()`. `auto` picks them for Laravel Cloud or elsewhere. See [Trusting proxies](configurables.md#trusting-proxies-from-the-environment). |
 | `morph_map` | — | `[]` | `alias => Model::class` pairs, enforced with `Relation::enforceMorphMap()`. |
 
 See [Configurables](configurables.md) for what each entry in `configurables` does.
