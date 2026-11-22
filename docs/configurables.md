@@ -90,11 +90,18 @@ Remove it from that list if the app answers on several hosts, or is reached at o
 TRUSTED_PROXIES=private_ranges
 ```
 
-It takes addresses or networks separated by commas, `private_ranges`, or `*` for any. For a default of your own, set it in the published config:
+It takes addresses or networks separated by commas, `private_ranges`, `*` for any, or `auto`:
+
+| Where the app runs | `auto` trusts                                         |
+| ------------------ | ----------------------------------------------------- |
+| Laravel Cloud      | `*`, as its load balancers have no fixed address       |
+| Anywhere else      | `private_ranges`                                      |
+
+`auto` is detected on boot, so it's also right when the config was cached during a build. For a default of your own, set it in the published config:
 
 ```php
 // config/essentials.php
-'trusted_proxies' => env('TRUSTED_PROXIES', 'private_ranges'),
+'trusted_proxies' => env('TRUSTED_PROXIES', 'auto'),
 ```
 
 A value here replaces `trustProxies(at: ...)`. Which headers count stays in `bootstrap/app.php`. Laravel believes `X-Forwarded-Host` by default, which lets a client choose the host unless your proxy overwrites that header, so leave it out if you don't need it:

@@ -26,6 +26,34 @@ it('trusts the configured proxies', function (string|array $proxies, string $rem
     'an array' => [['203.0.113.9'], '203.0.113.9', '198.51.100.7'],
 ]);
 
+it('picks the proxies for where the app runs with "auto"', function (bool $cloud, string $remote, string $ip) {
+    $server = $_SERVER;
+    $env = $_ENV;
+
+    unset($_SERVER['LARAVEL_CLOUD'], $_ENV['LARAVEL_CLOUD']);
+
+    if ($cloud) {
+        $_SERVER['LARAVEL_CLOUD'] = '1';
+    }
+
+    config(['essentials.trusted_proxies' => 'auto']);
+
+    try {
+        (new Essentials(app()))->configure();
+    } finally {
+        $_SERVER = $server;
+        $_ENV = $env;
+    }
+
+    $this->withServerVariables(['REMOTE_ADDR' => $remote])
+        ->get('/client', ['X-Forwarded-For' => '198.51.100.7'])
+        ->assertContent($ip);
+})->with([
+    'a private proxy' => [false, '10.89.0.5', '198.51.100.7'],
+    'a client outside the private ranges' => [false, '203.0.113.9', '203.0.113.9'],
+    'a load balancer of Laravel Cloud' => [true, '203.0.113.9', '198.51.100.7'],
+]);
+
 it('leaves the proxies of the app alone without configured ones', function (string|array|null $proxies) {
     TrustProxies::at('203.0.113.9');
     config(['essentials.trusted_proxies' => $proxies]);

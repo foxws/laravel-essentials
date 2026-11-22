@@ -56,6 +56,7 @@ return [
     |
     | The proxies whose X-Forwarded-* headers are believed: addresses or
     | networks separated by commas, "private_ranges", or "*" for any.
+    | "auto" is "*" on Laravel Cloud and "private_ranges" elsewhere.
     | When empty, the proxies set in bootstrap/app.php are left alone.
     |
     */
