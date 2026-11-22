@@ -34,6 +34,7 @@ Every configurable implements `Foxws\Essentials\Contracts\Configurable` (`enable
 | `EnforceMorphMap` | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)` |
 | `FakeSleep` | Running unit tests | `Sleep::fake()` |
 | `ForceHttpsScheme` | Always | `URL::forceHttps()` |
+| `ForceRootUrl` | Outside `local`, with an `app.url` | `URL::useOrigin()` with `app.url` |
 | `ForceSecurePassword` | Running in production | `Password::defaults()` — 12–64 chars, mixed case, numbers, symbols, "uncompromised" |
 | `ImmutableDates` | Always | `Date::use(CarbonImmutable::class)` |
 | `ModelShouldBeStrict` | Always | `Model::shouldBeStrict()` |
@@ -43,6 +44,8 @@ Every configurable implements `Foxws\Essentials\Contracts\Configurable` (`enable
 | `ResourceWithoutWrapping` | Always | `JsonResource::withoutWrapping()` |
 
 If an app's existing behavior conflicts with one of the "Always" defaults (e.g. it relies on lazy loading or wrapped JSON resources), publish the config and remove that configurable rather than working around it downstream.
+
+`ForceRootUrl` sends every generated link and redirect to `app.url`, as `ForceHttpsScheme` alone leaves the host and port to the request. Check `APP_URL` in every non-local environment, remove it for an app that serves several hosts, and add it to configs that were published before it existed, as those replace the default list. It doesn't cover `request()->url()`, `url()->full()`, pagination links, or the port of domain routes.
 
 ### 3. Enable, disable, or reorder configurables
 
