@@ -41,6 +41,7 @@ After your app boots, `Foxws\Essentials\Essentials::configure()` looks at every 
 | `PreventStrayRequests`                | Running unit tests                  | `Http::preventStrayRequests()`                                                                     |
 | `ProhibitDestructiveCommands`         | Running in production               | `DB::prohibitDestructiveCommands()`                                                                |
 | `ResourceWithoutWrapping`             | Always                              | `JsonResource::withoutWrapping()`                                                                  |
+| `SetTrustedProxies`                   | `essentials.trusted_proxies` is set | `TrustProxies::at(...)`                                                                            |
 
 Want to change which ones run, or the order they run in? Publish the config file and edit the `configurables` array:
 
@@ -80,6 +81,33 @@ Remove it from that list if the app answers on several hosts, or is reached at o
 - Links and redirects always go to `app.url`, and absolute signed URLs only validate on its host.
 - It reads `app.url` once, on boot. Changing that config later, as in a test, doesn't move the links.
 - It only changes the URL generator's root. `request()->url()`, `url()->full()` and pagination links still follow the request, and so does the port of a route with its own domain.
+
+## Trusting proxies from the environment
+
+`trustProxies(at: ...)` in `bootstrap/app.php` only suits fixed values: that callback runs before `.env` and the config are loaded, so `env()` doesn't see `.env` there and `config()` fails. `SetTrustedProxies` sets the proxies once your app has booted, so they can come from `.env`, with a cached config too:
+
+```ini
+TRUSTED_PROXIES=private_ranges
+```
+
+It takes addresses or networks separated by commas, `private_ranges`, or `*` for any. For a default of your own, set it in the published config:
+
+```php
+// config/essentials.php
+'trusted_proxies' => env('TRUSTED_PROXIES', 'private_ranges'),
+```
+
+A value here replaces `trustProxies(at: ...)`. Which headers count stays in `bootstrap/app.php`. Laravel believes `X-Forwarded-Host` by default, which lets a client choose the host unless your proxy overwrites that header, so leave it out if you don't need it:
+
+```php
+$middleware->trustProxies(
+    headers: Request::HEADER_X_FORWARDED_FOR |
+        Request::HEADER_X_FORWARDED_PORT |
+        Request::HEADER_X_FORWARDED_PROTO,
+);
+```
+
+A config published before this configurable existed needs `SetTrustedProxies::class` in its `configurables`. Restart Octane, or cache the config again, after changing the value.
 
 ## Writing your own configurable
 
