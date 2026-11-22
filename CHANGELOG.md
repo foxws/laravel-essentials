@@ -1,10 +1,65 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/2.0.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/3.0.0...HEAD)
 
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
+
+## [3.0.0](https://github.com/foxws/laravel-essentials/compare/2.1.0...3.0.0) - 2026-11-22
+
+3.0.0 turns on `ForceRootUrl`, which is a breaking change, and adds `SetTrustedProxies`.
+
+### Upgrading from 2.x
+
+Require `^3.0`, then follow the part that applies to your app.
+
+**Without a published `config/essentials.php`:**
+
+- Links and redirects now use `APP_URL` outside `local`, instead of the request's host and port. Set it in every environment, tests and previews included: Laravel's fallback is `http://localhost`.
+- If your app serves several hosts, or is reached at other addresses than `APP_URL`, publish the config and remove `ForceRootUrl`. Absolute signed URLs only validate on `APP_URL`'s host.
+- Tests that change `app.url` after boot, or expect links on the request's host, will fail.
+- If `TRUSTED_PROXIES` is already set in your environment, it now replaces `trustProxies(at: ...)`.
+
+**With a published config:** nothing changes, as your `configurables` replace the default list. Add the ones you want:
+
+```php
+'configurables' => [
+    // ...
+    ForceRootUrl::class,
+    SetTrustedProxies::class,
+],
+
+'trusted_proxies' => env('TRUSTED_PROXIES'),
+```
+
+### New
+
+- `ForceRootUrl` builds the root of generated links from `app.url`. With a response cache, this keeps a request from choosing the host or port of everyone's links. See [Forcing the root URL](https://github.com/foxws/laravel-essentials/blob/3.0.0/docs/configurables.md#forcing-the-root-url) for what it doesn't cover.
+- `SetTrustedProxies` sets the trusted proxies from `TRUSTED_PROXIES`, which `bootstrap/app.php` can't read from `.env`. See [Trusting proxies from the environment](https://github.com/foxws/laravel-essentials/blob/3.0.0/docs/configurables.md#trusting-proxies-from-the-environment).
+
+<!-- Release notes generated using configuration in .github/release.yml at 66e486368b9c3e24ae8e4f8a93d88d6a72c8ecc5 -->
+
+### What's Changed
+
+#### Other Changes
+
+* Add ForceRootUrl, enabled by default by @francoism90 in https://github.com/foxws/laravel-essentials/pull/19
+* Add SetTrustedProxies, for trusted proxies from the environment by @francoism90 in https://github.com/foxws/laravel-essentials/pull/20
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/2.1.0...3.0.0
+
+## [2.1.0](https://github.com/foxws/laravel-essentials/compare/2.0.0...2.1.0) - 2026-11-21
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+### What's Changed
+
+#### Other Changes
+
+* Add a GitHubImagesPreset that allows images from raw.githubusercontent.com by @francoism90 in https://github.com/foxws/laravel-essentials/pull/18
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/2.0.0...2.1.0
 
 ## [2.0.0](https://github.com/foxws/laravel-essentials/compare/1.2.0...2.0.0) - 2026-11-19
 
