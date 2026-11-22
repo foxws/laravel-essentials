@@ -1,10 +1,37 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/3.0.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/3.1.0...HEAD)
 
 ### Breaking
 
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
+
+## [3.1.0](https://github.com/foxws/laravel-essentials/compare/3.0.0...3.1.0) - 2026-11-22
+
+3.1.0 adds `auto` for trusted proxies. It's `*` on Laravel Cloud, whose load balancers have no fixed address, and `private_ranges` elsewhere:
+
+```php
+// config/essentials.php
+'trusted_proxies' => env('TRUSTED_PROXIES', 'auto'),
+
+```
+`SetTrustedProxies` resolves it on boot, so it's also right when the config was cached during a build.
+
+### Upgrading from 3.0
+
+Run `composer update foxws/laravel-essentials`. Nothing changes unless you use `auto`. To use it, require `^3.1`, as 3.0 doesn't know the value, and keep `SetTrustedProxies::class` in your `configurables`.
+
+See [Trusting proxies from the environment](https://github.com/foxws/laravel-essentials/blob/3.1.0/docs/configurables.md#trusting-proxies-from-the-environment).
+
+<!-- Release notes generated using configuration in .github/release.yml at d68e59e3511fe0b56295a4ff9618bf92b1f68d89 -->
+### What's Changed
+
+#### Other Changes
+
+* Fix the changelog workflow, and add 2.1.0 and 3.0.0 by @francoism90 in https://github.com/foxws/laravel-essentials/pull/21
+* Add auto, for trusted proxies on Laravel Cloud or elsewhere by @francoism90 in https://github.com/foxws/laravel-essentials/pull/22
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/3.0.0...3.1.0
 
 ## [3.0.0](https://github.com/foxws/laravel-essentials/compare/2.1.0...3.0.0) - 2026-11-22
 
@@ -31,15 +58,14 @@ Require `^3.0`, then follow the part that applies to your app.
 ],
 
 'trusted_proxies' => env('TRUSTED_PROXIES'),
-```
 
+```
 ### New
 
 - `ForceRootUrl` builds the root of generated links from `app.url`. With a response cache, this keeps a request from choosing the host or port of everyone's links. See [Forcing the root URL](https://github.com/foxws/laravel-essentials/blob/3.0.0/docs/configurables.md#forcing-the-root-url) for what it doesn't cover.
 - `SetTrustedProxies` sets the trusted proxies from `TRUSTED_PROXIES`, which `bootstrap/app.php` can't read from `.env`. See [Trusting proxies from the environment](https://github.com/foxws/laravel-essentials/blob/3.0.0/docs/configurables.md#trusting-proxies-from-the-environment).
 
 <!-- Release notes generated using configuration in .github/release.yml at 66e486368b9c3e24ae8e4f8a93d88d6a72c8ecc5 -->
-
 ### What's Changed
 
 #### Other Changes
@@ -52,7 +78,6 @@ Require `^3.0`, then follow the part that applies to your app.
 ## [2.1.0](https://github.com/foxws/laravel-essentials/compare/2.0.0...2.1.0) - 2026-11-21
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
-
 ### What's Changed
 
 #### Other Changes
