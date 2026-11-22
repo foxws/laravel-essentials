@@ -3,29 +3,15 @@
 declare(strict_types=1);
 
 use Foxws\Essentials\Configurables\ForceRootUrl;
-use Foxws\Essentials\Essentials;
 use Illuminate\Support\Facades\Route;
 
-beforeEach(function () {
-    config(['app.url' => 'http://example.com']);
-
+it('builds links on the configured url by default, whatever host or port the request names', function (string $url) {
     Route::get('/links', fn (): string => url('/page'));
-});
 
-it('leaves the root url to the request by default', function () {
-    $this->get('http://other.test:1337/links')
-        ->assertContent('https://other.test:1337/page');
-});
-
-it('builds links on the configured url, whatever host or port the request names', function (string $url) {
-    config(['essentials.configurables' => [ForceRootUrl::class]]);
-
-    (new Essentials(app()))->configure();
-
-    $this->get($url)->assertContent('https://example.com/page');
+    $this->get($url)->assertContent('https://localhost/page');
 })->with([
     'another host' => 'http://other.test/links',
-    'another port' => 'http://example.com:1337/links',
+    'another port' => 'http://localhost:1337/links',
 ]);
 
 it('is disabled locally', function () {

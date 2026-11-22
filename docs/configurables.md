@@ -33,7 +33,7 @@ After your app boots, `Foxws\Essentials\Essentials::configure()` looks at every 
 | `EnforceMorphMap`                     | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)`                                                                   |
 | `FakeSleep`                           | Running unit tests                  | `Sleep::fake()`                                                                                    |
 | `ForceHttpsScheme`                    | Always                              | `URL::forceHttps()`                                                                                |
-| `ForceRootUrl`                        | Opt-in, outside `local`             | `URL::useOrigin()` with `app.url`                                                                  |
+| `ForceRootUrl`                        | Outside `local`, with an `app.url`  | `URL::useOrigin()` with `app.url`                                                                  |
 | `ForceSecurePassword`                 | Running in production               | `Password::defaults()` with a 12–64 char, mixed-case, numbers, symbols, and "uncompromised" policy |
 | `ImmutableDates`                      | Always                              | `Date::use(CarbonImmutable::class)`                                                                |
 | `ModelShouldBeStrict`                 | Always                              | `Model::shouldBeStrict()`                                                                          |
@@ -61,7 +61,9 @@ php artisan vendor:publish --tag="essentials-config"
 
 `ForceHttpsScheme` only sets the scheme: the host and port of a generated link still come from the request. When such a link ends up in a response cache, or in a mail sent during a request, whoever made that request chose where it points.
 
-`ForceRootUrl` takes them from `app.url` instead. It's opt-in, because every environment other than `local` then needs the right `APP_URL`, previews included. Turn it on in the published config:
+`ForceRootUrl` takes them from `app.url` instead. It's on by default, so every environment other than `local` needs the right `APP_URL`, previews included.
+
+A published config replaces the default list, so an app that published it before this configurable existed has to add it:
 
 ```php
 // config/essentials.php
@@ -72,10 +74,11 @@ php artisan vendor:publish --tag="essentials-config"
 ],
 ```
 
-Before you turn it on:
+Remove it from that list if the app answers on several hosts, or is reached at other addresses than `app.url`. Otherwise:
 
 - Keep `ForceHttpsScheme` next to it. Without it, the scheme still comes from the request.
-- An app that answers on several hosts links and redirects to `app.url` on all of them, and absolute signed URLs only validate on that host.
+- Links and redirects always go to `app.url`, and absolute signed URLs only validate on its host.
+- It reads `app.url` once, on boot. Changing that config later, as in a test, doesn't move the links.
 - It only changes the URL generator's root. `request()->url()`, `url()->full()` and pagination links still follow the request, and so does the port of a route with its own domain.
 
 ## Writing your own configurable
