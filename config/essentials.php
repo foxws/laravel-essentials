@@ -15,7 +15,8 @@ use Foxws\Essentials\Configurables\ModelShouldBeStrict;
 use Foxws\Essentials\Configurables\PreventStrayRequests;
 use Foxws\Essentials\Configurables\ProhibitDestructiveCommands;
 use Foxws\Essentials\Configurables\ResourceWithoutWrapping;
-use Foxws\Essentials\Configurables\SetTrustedProxies;
+
+// use Foxws\Essentials\Configurables\SetTrustedProxies;
 
 return [
 
@@ -46,7 +47,7 @@ return [
         PreventStrayRequests::class,
         ProhibitDestructiveCommands::class,
         ResourceWithoutWrapping::class,
-        SetTrustedProxies::class,
+        // SetTrustedProxies::class,
     ]),
 
     /*
@@ -57,7 +58,8 @@ return [
     | The proxies whose X-Forwarded-* headers are believed: addresses or
     | networks separated by commas, "private_ranges", or "*" for any.
     | "auto" is "*" on Laravel Cloud and "private_ranges" elsewhere.
-    | When empty, the proxies set in bootstrap/app.php are left alone.
+    | When empty, the proxies set in bootstrap/app.php are left alone. Only
+    | applied once SetTrustedProxies is added to the configurables above.
     |
     */
 

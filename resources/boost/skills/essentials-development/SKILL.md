@@ -42,13 +42,13 @@ Every configurable implements `Foxws\Essentials\Contracts\Configurable` (`enable
 | `PreventStrayRequests` | Running unit tests | `Http::preventStrayRequests()` |
 | `ProhibitDestructiveCommands` | Running in production | `DB::prohibitDestructiveCommands()` |
 | `ResourceWithoutWrapping` | Always | `JsonResource::withoutWrapping()` |
-| `SetTrustedProxies` | `essentials.trusted_proxies` (`TRUSTED_PROXIES`) is set | `TrustProxies::at(...)` |
+| `SetTrustedProxies` | Opt-in (commented out by default), when `essentials.trusted_proxies` (`TRUSTED_PROXIES`) is set | `TrustProxies::at(...)` |
 
 If an app's existing behavior conflicts with one of the "Always" defaults (e.g. it relies on lazy loading or wrapped JSON resources), publish the config and remove that configurable rather than working around it downstream.
 
 `ForceRootUrl` sends every generated link and redirect to `app.url`, as `ForceHttpsScheme` alone leaves the host and port to the request. It's opt-in: add it to a published config once `APP_URL` is right in every non-local environment, and leave it out for an app that serves several hosts or is reached at other addresses. It doesn't cover `request()->url()`, `url()->full()`, pagination links, or the port of domain routes.
 
-For proxies that differ per environment, set `TRUSTED_PROXIES` rather than calling `env()` or `config()` in `withMiddleware()`, which runs before either is loaded. Use `auto` as the app's default (`env('TRUSTED_PROXIES', 'auto')`): it's `*` on Laravel Cloud and `private_ranges` elsewhere, detected on boot, so don't call `laravel_cloud()` in the config. It replaces `trustProxies(at: ...)`. Keep `trustProxies(headers: ...)` in `bootstrap/app.php`, without `X-Forwarded-Host` unless the proxy overwrites it. A config published earlier needs `SetTrustedProxies::class` added.
+For proxies that differ per environment, set `TRUSTED_PROXIES` rather than calling `env()` or `config()` in `withMiddleware()`, which runs before either is loaded. Use `auto` as the app's default (`env('TRUSTED_PROXIES', 'auto')`): it's `*` on Laravel Cloud and `private_ranges` elsewhere, detected on boot, so don't call `laravel_cloud()` in the config. It replaces `trustProxies(at: ...)`. Keep `trustProxies(headers: ...)` in `bootstrap/app.php`, without `X-Forwarded-Host` unless the proxy overwrites it. It's opt-in: add `SetTrustedProxies::class` to a published config's `configurables`, or `TRUSTED_PROXIES` does nothing.
 
 ### 3. Enable, disable, or reorder configurables
 

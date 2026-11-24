@@ -41,7 +41,7 @@ After your app boots, `Foxws\Essentials\Essentials::configure()` looks at every 
 | `PreventStrayRequests`                | Running unit tests                  | `Http::preventStrayRequests()`                                                                     |
 | `ProhibitDestructiveCommands`         | Running in production               | `DB::prohibitDestructiveCommands()`                                                                |
 | `ResourceWithoutWrapping`             | Always                              | `JsonResource::withoutWrapping()`                                                                  |
-| `SetTrustedProxies`                   | `essentials.trusted_proxies` is set | `TrustProxies::at(...)`                                                                            |
+| `SetTrustedProxies`                   | Opt-in, when `essentials.trusted_proxies` is set | `TrustProxies::at(...)`                                                                            |
 
 Want to change which ones run, or the order they run in? Publish the config file and edit the `configurables` array:
 
@@ -84,7 +84,17 @@ Leave it out if the app answers on several hosts, or is reached at other address
 
 ## Trusting proxies from the environment
 
-`trustProxies(at: ...)` in `bootstrap/app.php` only suits fixed values: that callback runs before `.env` and the config are loaded, so `env()` doesn't see `.env` there and `config()` fails. `SetTrustedProxies` sets the proxies once your app has booted, so they can come from `.env`, with a cached config too:
+`trustProxies(at: ...)` in `bootstrap/app.php` only suits fixed values: that callback runs before `.env` and the config are loaded, so `env()` doesn't see `.env` there and `config()` fails. `SetTrustedProxies` sets the proxies once your app has booted, so they can come from `.env`, with a cached config too. It's opt-in, as it replaces the proxies in `bootstrap/app.php`: publish the config and add it to the `configurables` (the default config has it commented out):
+
+```php
+// config/essentials.php
+'configurables' => [
+    // ...
+    Foxws\Essentials\Configurables\SetTrustedProxies::class,
+],
+```
+
+Then set the proxies:
 
 ```ini
 TRUSTED_PROXIES=private_ranges
@@ -114,7 +124,7 @@ $middleware->trustProxies(
 );
 ```
 
-A config published before this configurable existed needs `SetTrustedProxies::class` in its `configurables`. Restart Octane, or cache the config again, after changing the value.
+Restart Octane, or cache the config again, after changing the value.
 
 ## Writing your own configurable
 
