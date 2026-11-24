@@ -33,7 +33,7 @@ After your app boots, `Foxws\Essentials\Essentials::configure()` looks at every 
 | `EnforceMorphMap`                     | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)`                                                                   |
 | `FakeSleep`                           | Running unit tests                  | `Sleep::fake()`                                                                                    |
 | `ForceHttpsScheme`                    | Always                              | `URL::forceHttps()`                                                                                |
-| `ForceRootUrl`                        | Outside `local`, with an `app.url`  | `URL::useOrigin()` with `app.url`                                                                  |
+| `ForceRootUrl`                        | Opt-in, outside `local`, with an `app.url` | `URL::useOrigin()` with `app.url`                                                                  |
 | `ForceSecurePassword`                 | Running in production               | `Password::defaults()` with a 12–64 char, mixed-case, numbers, symbols, and "uncompromised" policy |
 | `ImmutableDates`                      | Always                              | `Date::use(CarbonImmutable::class)`                                                                |
 | `ModelShouldBeStrict`                 | Always                              | `Model::shouldBeStrict()`                                                                          |
@@ -41,7 +41,7 @@ After your app boots, `Foxws\Essentials\Essentials::configure()` looks at every 
 | `PreventStrayRequests`                | Running unit tests                  | `Http::preventStrayRequests()`                                                                     |
 | `ProhibitDestructiveCommands`         | Running in production               | `DB::prohibitDestructiveCommands()`                                                                |
 | `ResourceWithoutWrapping`             | Always                              | `JsonResource::withoutWrapping()`                                                                  |
-| `SetTrustedProxies`                   | `essentials.trusted_proxies` is set | `TrustProxies::at(...)`                                                                            |
+| `SetTrustedProxies`                   | Opt-in, when `essentials.trusted_proxies` is set | `TrustProxies::at(...)`                                                                            |
 
 Want to change which ones run, or the order they run in? Publish the config file and edit the `configurables` array:
 
@@ -62,9 +62,9 @@ php artisan vendor:publish --tag="essentials-config"
 
 `ForceHttpsScheme` only sets the scheme: the host and port of a generated link still come from the request. When such a link ends up in a response cache, or in a mail sent during a request, whoever made that request chose where it points.
 
-`ForceRootUrl` takes them from `app.url` instead. It's on by default, so every environment other than `local` needs the right `APP_URL`, previews included.
+`ForceRootUrl` takes them from `app.url` instead. It's opt-in, as it changes where every link and redirect goes, which is hard to trace when you don't expect it. Turn it on when every environment other than `local` has the right `APP_URL`, previews included.
 
-A published config replaces the default list, so an app that published it before this configurable existed has to add it:
+Publish the config and add it to the `configurables` (the default config has it commented out):
 
 ```php
 // config/essentials.php
@@ -75,7 +75,7 @@ A published config replaces the default list, so an app that published it before
 ],
 ```
 
-Remove it from that list if the app answers on several hosts, or is reached at other addresses than `app.url`. Otherwise:
+Leave it out if the app answers on several hosts, or is reached at other addresses than `app.url`. With it:
 
 - Keep `ForceHttpsScheme` next to it. Without it, the scheme still comes from the request.
 - Links and redirects always go to `app.url`, and absolute signed URLs only validate on its host.
@@ -84,7 +84,17 @@ Remove it from that list if the app answers on several hosts, or is reached at o
 
 ## Trusting proxies from the environment
 
-`trustProxies(at: ...)` in `bootstrap/app.php` only suits fixed values: that callback runs before `.env` and the config are loaded, so `env()` doesn't see `.env` there and `config()` fails. `SetTrustedProxies` sets the proxies once your app has booted, so they can come from `.env`, with a cached config too:
+`trustProxies(at: ...)` in `bootstrap/app.php` only suits fixed values: that callback runs before `.env` and the config are loaded, so `env()` doesn't see `.env` there and `config()` fails. `SetTrustedProxies` sets the proxies once your app has booted, so they can come from `.env`, with a cached config too. It's opt-in, as it replaces the proxies in `bootstrap/app.php`: publish the config and add it to the `configurables` (the default config has it commented out):
+
+```php
+// config/essentials.php
+'configurables' => [
+    // ...
+    Foxws\Essentials\Configurables\SetTrustedProxies::class,
+],
+```
+
+Then set the proxies:
 
 ```ini
 TRUSTED_PROXIES=private_ranges
@@ -114,7 +124,7 @@ $middleware->trustProxies(
 );
 ```
 
-A config published before this configurable existed needs `SetTrustedProxies::class` in its `configurables`. Restart Octane, or cache the config again, after changing the value.
+Restart Octane, or cache the config again, after changing the value.
 
 ## Writing your own configurable
 

@@ -4,6 +4,7 @@
 
 ### Breaking
 
+- `ForceRootUrl` and `SetTrustedProxies` are opt-in: the default config has them commented out, like `ModelUnguard`. They change where links and redirects go, and which proxies are trusted, which is hard to trace in an app that doesn't expect it. Apps without a published config that rely on them publish the config and add them to the `configurables`: `ForceRootUrl::class`, for example to keep a response cache from storing links on a request's host, and `SetTrustedProxies::class`, or `TRUSTED_PROXIES` does nothing. A published config is unchanged.
 - Domain Driven Design scaffolding (`ddd:install`, `ddd:make*` commands, layer config, and stubs) has moved to the separate [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) package. Require it alongside `foxws/laravel-essentials` if you use those commands.
 
 ## [3.1.0](https://github.com/foxws/laravel-essentials/compare/3.0.0...3.1.0) - 2026-11-22
