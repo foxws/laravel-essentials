@@ -1,6 +1,19 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-essentials/compare/3.2.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-essentials/compare/3.2.1...HEAD)
+
+## [3.2.1](https://github.com/foxws/laravel-essentials/compare/3.2.0...3.2.1) - 2026-11-25
+
+3.2.1 lets `IconifyPreset` also allow `api2.iconify.design`, the host `@iconify/vue` falls back to when `api.iconify.design` fails.
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+### What's Changed
+
+#### Other Changes
+
+* Allow the Iconify fallback host in IconifyPreset by @francoism90 in https://github.com/foxws/laravel-essentials/pull/24
+
+**Full Changelog**: https://github.com/foxws/laravel-essentials/compare/3.2.0...3.2.1
 
 ## [3.2.0](https://github.com/foxws/laravel-essentials/compare/3.1.0...3.2.0) - 2026-11-24
 
@@ -24,6 +37,7 @@
 ```php
 // config/essentials.php
 'trusted_proxies' => env('TRUSTED_PROXIES', 'auto'),
+
 
 
 ```
@@ -70,6 +84,7 @@ Require `^3.0`, then follow the part that applies to your app.
 ],
 
 'trusted_proxies' => env('TRUSTED_PROXIES'),
+
 
 
 ```
