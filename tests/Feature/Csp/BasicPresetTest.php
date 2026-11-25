@@ -44,7 +44,7 @@ it('allows the iconify api', function () {
     $policy = new Policy;
     (new IconifyPreset)->configure($policy);
 
-    expect($policy->getContents())->toContain('connect-src api.iconify.design');
+    expect($policy->getContents())->toContain('connect-src api.iconify.design api2.iconify.design');
 });
 
 it('allows images from raw.githubusercontent.com', function () {
