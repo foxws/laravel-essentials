@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/foxws/laravel-essentials/compare/3.2.1...HEAD)
 
+### Breaking
+
+- `ForceHttpsScheme` only forces `https` in production, like `ProhibitDestructiveCommands`. Elsewhere, generated links and redirects keep the request's scheme, so an app served over plain HTTP locally no longer links to an `https` address it doesn't answer on. A non-production environment behind HTTPS still gets `https` links when it trusts its proxy's `X-Forwarded-Proto`; otherwise call `URL::forceHttps()` yourself there.
+
 ## [3.2.1](https://github.com/foxws/laravel-essentials/compare/3.2.0...3.2.1) - 2026-11-25
 
 3.2.1 lets `IconifyPreset` also allow `api2.iconify.design`, the host `@iconify/vue` falls back to when `api.iconify.design` fails.
