@@ -11,7 +11,7 @@ final readonly class ForceHttpsScheme implements Configurable
 {
     public function enabled(): bool
     {
-        return true;
+        return app()->isProduction();
     }
 
     public function configure(): void

@@ -32,7 +32,7 @@ After your app boots, `Foxws\Essentials\Essentials::configure()` looks at every 
 | `AutomaticallyEagerLoadRelationships` | Always                              | `Model::automaticallyEagerLoadRelationships()`                                                     |
 | `EnforceMorphMap`                     | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)`                                                                   |
 | `FakeSleep`                           | Running unit tests                  | `Sleep::fake()`                                                                                    |
-| `ForceHttpsScheme`                    | Always                              | `URL::forceHttps()`                                                                                |
+| `ForceHttpsScheme`                    | Running in production               | `URL::forceHttps()`                                                                                |
 | `ForceRootUrl`                        | Opt-in, outside `local`, with an `app.url` | `URL::useOrigin()` with `app.url`                                                                  |
 | `ForceSecurePassword`                 | Running in production               | `Password::defaults()` with a 12–64 char, mixed-case, numbers, symbols, and "uncompromised" policy |
 | `ImmutableDates`                      | Always                              | `Date::use(CarbonImmutable::class)`                                                                |

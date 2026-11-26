@@ -13,8 +13,8 @@ beforeEach(function () {
 it('leaves links on the request\'s host and port by default', function (string $url, string $link) {
     $this->get($url)->assertContent($link);
 })->with([
-    'another host' => ['http://other.test/links', 'https://other.test/page'],
-    'another port' => ['http://localhost:1337/links', 'https://localhost:1337/page'],
+    'another host' => ['http://other.test/links', 'http://other.test/page'],
+    'another port' => ['http://localhost:1337/links', 'http://localhost:1337/page'],
 ]);
 
 it('builds links on the configured url once added, whatever host or port the request names', function (string $url) {
@@ -22,7 +22,7 @@ it('builds links on the configured url once added, whatever host or port the req
 
     (new Essentials(app()))->configure();
 
-    $this->get($url)->assertContent('https://localhost/page');
+    $this->get($url)->assertContent('http://localhost/page');
 })->with([
     'another host' => 'http://other.test/links',
     'another port' => 'http://localhost:1337/links',

@@ -33,7 +33,7 @@ Every configurable implements `Foxws\Essentials\Contracts\Configurable` (`enable
 | `AutomaticallyEagerLoadRelationships` | Always | `Model::automaticallyEagerLoadRelationships()` |
 | `EnforceMorphMap` | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)` |
 | `FakeSleep` | Running unit tests | `Sleep::fake()` |
-| `ForceHttpsScheme` | Always | `URL::forceHttps()` |
+| `ForceHttpsScheme` | Running in production | `URL::forceHttps()` |
 | `ForceRootUrl` | Opt-in (commented out by default), outside `local`, with an `app.url` | `URL::useOrigin()` with `app.url` |
 | `ForceSecurePassword` | Running in production | `Password::defaults()` — 12–64 chars, mixed case, numbers, symbols, "uncompromised" |
 | `ImmutableDates` | Always | `Date::use(CarbonImmutable::class)` |
@@ -122,7 +122,7 @@ Read before executing:
 
 ## Examples
 
-- A new Laravel app installs the package and gets HTTPS URLs, immutable dates, strict models, and unwrapped JSON resources with zero configuration; it publishes the config only to turn off `ResourceWithoutWrapping` because an existing API contract expects the `data` wrapper.
+- A new Laravel app installs the package and gets HTTPS URLs in production, immutable dates, strict models, and unwrapped JSON resources with zero configuration; it publishes the config only to turn off `ResourceWithoutWrapping` because an existing API contract expects the `data` wrapper.
 - A separate first-party package calls `Essentials::extend(new EnforceQueueConnection)` from its own service provider so every app that installs both packages gets the behavior automatically, without editing `config/essentials.php`.
 
 ## Anti-patterns
